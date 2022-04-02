@@ -10,44 +10,44 @@
                         </h4>
                     </div>
                     <div class="card-body " style="max-height: 82vh; overflow-y:scroll">
-					<div id="lefttop">
-									<div class="form-group">
-												<p align="left"><a href="#" title="Cari Barang"><i class="fa fa-search"></i></a> Cari Barang </p>
-												<form>
-													<div class="form-group">
-														<input class="form-control" name="idbarang" type="text" onkeyup="showResult(this.value)" placeholder="Ketik Nama Barang">
-														<div id="hasilcari">
-															
-														</div>
-														
-													</div>
-												</form>
-											</div>
-								</div>
+                        <div id="lefttop">
+                            <div class="form-group">
+                                <p align="left"><a href="#" title="Cari Barang"><i class="fa fa-search"></i></a> Cari Barang </p>
+                                <form>
+                                    <div class="form-group">
+                                        <input class="form-control" name="idbarang" type="text" onkeyup="showResult(this.value)" placeholder="Ketik Nama Barang">
+                                        <div id="hasilcari">
+
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                         <form action="" method="post">
-                            <?php foreach($jenis as $jns): ?>
+                            <?php foreach ($jenis as $jns) : ?>
                                 <h6 class="text-dark"><?= $jns['namaJenis'] ?></h6>
                                 <div class="row">
-                                    <?php foreach($barang as $brg): ?>
-                                        <?php if ($brg['idJenis'] == $jns['idJenis']): ?>
-                                            <?php if ($brg['stok'] > '0'): ?>
+                                    <?php foreach ($barang as $brg) : ?>
+                                        <?php if ($brg['idJenis'] == $jns['idJenis']) : ?>
+                                            <?php if ($brg['stok'] > '0') : ?>
                                                 <div class="col-12 col-md-6 col-lg-4">
                                                     <div class="form-group text-center">
-														<div class="card card-primary">
-                                                        <a href="#" data-id="<?= $brg['idBarang'] ?>" data-name="<?php echo str_replace(" ", "_", $brg['nama']); ?>" data-price="<?= $brg['harga'] ?>" class="add-to-cart">
-                                                        <div class="card-header">
-														<h3 class="mt-2 mb-0 font-18 text-dark"><?= $brg['nama'] ?></h3>
-														</div>
-														<div class="card-body">
-                                                        <h6 class="text-dark font-15">Rp. <?= number_format($brg['harga'], 0, '', '.') ?></h6>
-														</div>
-                                            </a>
-														</div>
+                                                        <div class="card card-primary">
+                                                            <a href="#" data-id="<?= $brg['idBarang'] ?>" data-name="<?php echo str_replace(" ", "_", $brg['nama']); ?>" data-price="<?= $brg['harga'] ?>" class="add-to-cart">
+                                                                <div class="card-header">
+                                                                    <h3 class="mt-2 mb-0 font-18 text-dark"><?= $brg['nama'] ?></h3>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <h6 class="text-dark font-15">Rp. <?= number_format($brg['harga'], 0, '', '.') ?></h6>
+                                                                </div>
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             <?php endif ?>
                                         <?php endif ?>
-                                    <?php endforeach;?>
+                                    <?php endforeach; ?>
                                 </div>
                             <?php endforeach; ?>
                         </form>
@@ -64,9 +64,9 @@
                                     <h4>
                                         Transaksi
                                     </h4>
-												
+
                                 </div>
-                                <div class="card-body" >
+                                <div class="card-body">
                                     <div class="container" style="height: 25vh;overflow-y:scroll">
                                         <div class="row py-1 border-bottom border-top text-dark font-weight-bold">
                                             <div class="col-4 my-auto  font-16">
@@ -80,7 +80,7 @@
                                             </div>
                                             <hr>
                                         </div>
-                                        
+
                                         <div class="show-cart table">
 
                                         </div>
@@ -123,8 +123,8 @@
 
                                     <!-- Input tanggal digunakan saat preorder -->
                                     <input hidden id="noTransaksi" type="text" name="noTransaksi" value="<?php echo $noTransaksi ?>" class="form-control">
-									<input hidden id="idPelangganHasil" type="text" name="idPelanggan" class="form-control">
-									<input hidden id="keteranganhasil" type="text" name="keterangan" class="form-control">
+                                    <input hidden id="idPelangganHasil" type="text" name="idPelanggan" class="form-control">
+                                    <input hidden id="keteranganhasil" type="text" name="keterangan" class="form-control">
 
                                     <div class="d-flex">
                                         <div class="clear-cart btn btn-danger mr-3" type="button">
@@ -139,7 +139,7 @@
                         </div>
                     </div>
 
-                <!-- Modal Pembayaran-->
+                    <!-- Modal Pembayaran-->
                     <div class="modal fade" id="modal_kembalian" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-center">
                             <div class="modal-content">
@@ -150,7 +150,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-									<div class="form-row">
+                                    <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label>
                                                 Total Belanja
@@ -177,53 +177,53 @@
                                                 <input id="kembalian" type="text" name="kembalian" class="form-control" readonly>
                                             </div>
                                         </div>
-									</div>
-										<div class="form-group">
-												<label>
-													Kode Transaksi
-												</label>
-												<div class="input-group">
-													<input id="noTransaksi" type="text" name="noTransaksi" class="form-control" value="<?php echo $noTransaksi ?>" readonly>
-												</div>
-										</div>
-										<div class="form-group">
-												<label>
-													Pelanggan
-												</label>
-												<div class="input-group">
-												<select type="text" class="form-control" name="idPelanggan" id="idPelanggan" onClick="getidPelanggan();">
-													<option value="">Pilih Pelanggan</option>
-													<?php foreach ($pelanggan as $plg) : ?>
-														<option value="<?php echo $plg['idPelanggan'] ?>"><?php echo $plg['nama'] ?></option>
-													<?php endforeach ?>
-                                           		 </select>	
-													</div>
-										</div>
-										<div class="form-group">
-												<label>
-													Keterangan
-												</label>
-													<textarea id="keterangan" type="text" name="keterangan" class="form-control" onkeyup="getketerangan(this.id);" ></textarea>
-										</div>
-                                        <div class="d-flex justify-content-around">
-                                            <button type="button" class="btn btn-danger mr-3" data-dismiss="modal">
-                                                <i class="fas fa-backspace mr-1"></i>
-                                                Batal
-                                            </button>
-                                            <button type="button" class="btn btn-primary" onclick="submit_terjual()">
-                                                <i class="fas fa-save mr-1"></i>
-                                                Simpan
-                                            </button>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            Kode Transaksi
+                                        </label>
+                                        <div class="input-group">
+                                            <input id="noTransaksi" type="text" name="noTransaksi" class="form-control" value="<?php echo $noTransaksi ?>" readonly>
                                         </div>
-								</form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <!-- tutup modal -->
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            Pelanggan
+                                        </label>
+                                        <div class="input-group">
+                                            <select type="text" class="form-control" name="idPelanggan" id="idPelanggan" onChange="getidPelanggan();">
+                                                <option value="" disabled selected>Pilih Pelanggan</option>
+                                                <?php foreach ($pelanggan as $plg) : ?>
+                                                    <option value="<?php echo $plg['idPelanggan'] ?>"><?php echo $plg['nama'] ?></option>
+                                                <?php endforeach ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            Keterangan
+                                        </label>
+                                        <textarea id="keterangan" type="text" name="keterangan" class="form-control" onkeyup="getketerangan(this.id);"></textarea>
+                                    </div>
+                                    <div class="d-flex justify-content-around">
+                                        <button type="button" class="btn btn-danger mr-3" data-dismiss="modal">
+                                            <i class="fas fa-backspace mr-1"></i>
+                                            Batal
+                                        </button>
+                                        <button type="button" class="btn btn-primary" onclick="submit_terjual()">
+                                            <i class="fas fa-save mr-1"></i>
+                                            Simpan
+                                        </button>
+                                    </div>
+                </form>
             </div>
         </div>
-    </section>
+</div>
+</div>
+<!-- tutup modal -->
+</div>
+</div>
+</section>
 </div>
 
 
@@ -232,7 +232,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script type="text/javascript">
-	function showResult(str) {
+    function showResult(str) {
         if (str.length == 0) {
             document.getElementById("hasilcari").innerHTML = "";
             document.getElementById("hasilcari").style.border = "0px";
@@ -255,4 +255,3 @@
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-

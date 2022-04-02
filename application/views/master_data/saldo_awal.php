@@ -49,7 +49,7 @@
                   foreach ($akun as $ak) : ?>
                     <tr>
                       <td class="text-center"><?php echo $i++ ?></td>
-                      <td><?= $ak['kodeJenis'] ?> - <?= $ak['kodeAkun'] ?></td>
+                      <td><?= $ak['kodeAkun'] ?></td>
                       <td><?= $ak['namaJenis'] ?></td>
                       <td><?= $ak['namaAkun'] ?></td>
                       <td>Rp <?= number_format($ak['saldoAkhir'], 0, ",", ",") ?></td>
@@ -86,7 +86,7 @@
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							<label >Kode Akun</label>
-							<input type="text" class="form-control" value="<?= $ak['kodeJenis'] ?> - <?= $ak['kodeAkun'] ?>" readonly>
+							<input type="text" class="form-control" value="<?= $ak['kodeAkun'] ?>" readonly>
 						</div>
 						<div class="form-group col-md-6">
 							<label >Jenis Akun</label>

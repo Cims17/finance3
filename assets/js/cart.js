@@ -270,4 +270,5 @@ function submit_terjual(){
 	sessionStorage.removeItem("shoppingCart", JSON.stringify(cart));
 }
 
+
 displayCart();

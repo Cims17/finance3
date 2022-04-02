@@ -22,6 +22,7 @@
                                             #
                                         </th>
                                         <th>Nama Jenis</th>
+										<th>Tipe Jenis</th>
 										<th>Kode Jenis</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -36,6 +37,7 @@
                                                 <?= $i++ ?>
                                             </td>
                                             <td><?= $jns['namaJenis'] ?></td>
+											<td><?= $jns['nama_tipeAkun'] ?></td>
 											<td><?= $jns['kodeJenis'] ?></td>
 
                                             <td class="d-flex">
@@ -74,6 +76,22 @@
             </div>
             <div class="modal-body">
                 <form action="<?php base_url() ?>tambah_jenis_akun" method="post" enctype="multipart/form-data">
+					<div class="form-group">
+						<label>Tipe Jenis</label>
+						<div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                            </div>
+                            <select type="text" class="form-control" name="id_tipeakun" id="id_tipeakun">
+								<option value="" disabled selected>Pilih Tipe Jenis</option>
+								<?php foreach ($tipe as $tp) : ?>
+									<option value="<?= $tp['id_tipeAkun'] ?>"><?= $tp['nama_tipeAkun'] ?> </option>
+								<?php endforeach ?>
+							</select>
+                        </div>
+					</div>
                     <div class="form-group">
                         <label>Nama Jenis</label>
                         <div class="input-group">

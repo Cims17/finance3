@@ -166,8 +166,12 @@ class Transaksi extends CI_Controller
     {
         $data['pembelian']			= $this->Model_transaksi->get_pembelian()->result_array() ;
 		$data['pembelian_detail'] 	= $this->Model_transaksi->get_pembelian_detail()->result_array();
-		$data['barang']				= $this->Model_akun->get_barang()->result_array(); 
-
+		$barang						= $this->Model_akun->get_barang()->result_array(); 
+		$data['namabarang'] =array();
+        foreach ($barang as $brg) {
+			array_push( $data['namabarang'], $brg['nama']);
+        }
+		
         $this->load->view('template/header');
         $this->load->view('template/sidebar');
         $this->load->view('transaksi/data_pembelian', $data);

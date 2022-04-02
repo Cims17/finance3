@@ -26,14 +26,38 @@ class Model_akun extends CI_Model {
         return $this->db->select_sum('saldoAkhir')->get('akun');
     }
 
-    public function get_jenis_akun(){
+	public function get_tipe_akun(){
         $this->db->select('*');
-        $this->db->from('jenis_akun');
+        $this->db->from('tipe_akun');
         return $this->db->get();
     }
 
+
+    public function get_jenis_akun(){
+        $this->db->select('*');
+        $this->db->from('jenis_akun');
+		$this->db->join('tipe_akun', 'jenis_akun.id_tipeAkun=tipe_akun.id_tipeAkun');
+        return $this->db->get();
+    }
+
+	public function get_kodejenismodal($postData=array()){
+		$response = array();
+ 
+		if(isset($postData['idJenis']) ){
+	
+		// Select record
+		$this->db->select('*');
+		$this->db->where('idJenis', $postData['idJenis']);
+		$records = $this->db->get('jenis_akun');
+		$response = $records->result_array();
+	
+		}
+	
+		return $response;
+	}
+
     public function get_akun_filter($selesai, $mulai){
-        $this->db->select('saldo_awal_log.*, akun.kodeAkun, akun.namaAkun, akun.saldoAkhir,jenis_akun.namaJenis');
+        $this->db->select('saldo_awal_log.*, akun.*,jenis_akun.namaJenis,jenis_akun.kodeJenis');
         $this->db->from('saldo_awal_log, akun,jenis_akun');
         $this->db->where('akun.idJenis = jenis_akun.idJenis');
         $this->db->where('saldo_awal_log.idAkun = akun.idAkun');

@@ -63,12 +63,35 @@ class Laporan extends CI_Controller
 	}
 
 	public function laporan_posisi_keuangan()
-	{		
+	{	
 		$this->load->view('template/header');
 		$this->load->view('template/sidebar');
 		$this->load->view('laporan/posisi_keuangan');
 		$this->load->view('template/footer');
 	}
+
+	public function laporan_posisi_keuangan_filter()
+	{
+        $mulai = $this->input->post('mulai');
+        $selesai = $this->input->post('selesai');
+        if (!$mulai) {
+            redirect('laporan/posisi_keuangan');
+        } else {
+			$data['total_jenis']	= $this->Model_laporan->get_posisi_keuangan_totaljenis($mulai, $selesai)->result_array();
+			$data['akun']	= $this->Model_laporan->get_posisi_keuangan($mulai, $selesai)->result_array();
+			$data['jenis']	= $this->Model_akun->get_jenis_akun()->result_array();
+			$data['tipe']	= $this->Model_akun->get_tipe_akun()->result_array();
+
+            $data['nama'] = array(
+                'mulai'      => $mulai,
+                'selesai'       => $selesai,
+            );
+            $this->load->view('template/header');
+            $this->load->view('template/sidebar');
+            $this->load->view('laporan/posisi_keuangan_filter', $data);
+            $this->load->view('template/footer');
+        }
+    }
 
 	// public function export()
 	// {

@@ -26,7 +26,7 @@
                                         <th width="10px" rowspan="2">No</th>
                                         <th rowspan="2">Nama Akun</th>
                                         <th rowspan="2">Kode Akun</th>
-                                        <th rowspan="2">Keterangan</th>
+                                        <th rowspan="2">Jenis Akun</th>
                                         <th colspan="2" class="text-center">Saldo</th>
                                         <th rowspan="2">Aksi</th>
                                     </tr>
@@ -43,7 +43,7 @@
                                         <tr id="<?php echo $ak['idAkun'] ?>">
                                             <td><?php echo $i++; ?></td>
                                             <td><?= $ak['namaAkun'] ?></td>
-                                            <td><?= $ak['kodeJenis'] ?> - <?= $ak['kodeAkun'] ?></td>
+                                            <td><?= $ak['kodeAkun'] ?></td>
                                             <td><?= $ak['namaJenis'] ?></td>
                                             <td>
                                                 <?php

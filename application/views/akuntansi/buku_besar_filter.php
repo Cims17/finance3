@@ -75,7 +75,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <h4>
-                            Nama Akun : <?=$ak2['namaAkun']?>
+                            Nama Akun : <?= $nama['namaAkun'] ?>
                         </h4>
 
 

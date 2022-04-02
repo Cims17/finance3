@@ -28,20 +28,19 @@ class Buku_Besar extends CI_Controller
         $selesai = $this->input->post('selesai');
         if (!$idAkun) {
             redirect('akuntansi/buku_besar');
-        }else{
+        } else {
             $data['filter'] = $this->Model_akuntansi->get_buku_besar($idAkun, $mulai, $selesai)->result_array();
-
             $data['akun'] = $this->Model_akun->get_detail('akun', 'idAkun', $idAkun)->row();
             $data['akun2'] = $this->Model_akun->get_akun()->result_array();
             $data['nama'] = array(
                 'mulai'      => $mulai,
-                'selesai'       => $selesai
+                'selesai'       => $selesai,
+                'namaAkun'  => $data['akun']->namaAkun
             );
             $this->load->view('template/header');
             $this->load->view('template/sidebar');
             $this->load->view('akuntansi/buku_besar_filter', $data);
             $this->load->view('template/footer');
         }
-        
     }
 }
