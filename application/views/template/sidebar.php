@@ -51,14 +51,13 @@
                     <li class="<?php echo ($this->uri->segment(2) === 'laporan_posisi_keuangan') ? 'active' : '' ?>"><a class="nav-link" href="<?php echo base_url() ?>laporan/laporan_posisi_keuangan">Laporan Posisi Keuangan</a></li>
                 </ul>
             </li>
-			<?php } ?>
-            <!-- <li class="menu-header">Akun</li>
+			
+            <li class="menu-header">Akun</li>
             <li class="dropdown <?php echo ($this->uri->segment(1) === 'pengaturan') ? 'active' : '' ?>">
                 <a href="<?php echo base_url()?>pengaturan" class="nav-link "><i data-feather="settings"></i><span>Pengaturan Akun</span></a>     
             </li>
-            <li class="dropdown <?php echo ($this->uri->segment(1) === 'pengaturan_profile') ? 'active' : '' ?>">
-                <a href="<?php echo base_url()?>pengaturan" class="nav-link "><i data-feather="user"></i><span>Pengaturan Profile</span></a>     
-            </li> -->
+
+			<?php } ?>
         </ul>
     </aside>
 </div>

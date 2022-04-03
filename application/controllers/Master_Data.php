@@ -67,45 +67,97 @@ class Master_Data extends CI_Controller
 		$idAkun = $this->input->post('idAkun');
 		$nominal = $this->input->post('saldoAwal');
 		$saldoAwal = filter_var($nominal, FILTER_SANITIZE_NUMBER_INT);
+		$jenisSaldo = $this->input->post('jenisSaldo');
 		// echo $saldoAwal;
 		$keterangan = $this->input->post('keterangan');
-		// var_dump($keterangan);
-		$saldo_ada = $this->db->get_where('saldo_awal_log', ['idAkun' => $idAkun])->row();
 
-		// echo $saldo_awal_ada;
-		if ($saldo_ada) {
-			$data = array(
+		if ($jenisSaldo == "Kredit") {
+			$data3 = array(
 				'idAkun'        => $idAkun,
-				'saldoAwal'       => $saldoAwal,
+				'kredit'       => $saldoAwal,
+				'keterangan'       => $keterangan,
+				'input_from'       => 'Saldo Awal'
 			);
-			$update = $this->Model_akuntansi->update_data('saldo_awal_log', $data, $idAkun, 'idAkun');
-			if ($update) {
-				$data3 = array(
+			
+			$save = $this->Model_akun->insert_log($data3);
+			if ($save) {
+				$data2 = array(
+					'idAkun'        => $idAkun,
+					'kredit'       => $nominal,
+					'idLog'       => $this->db->insert_id(),
+				);
+				$this->Model_akuntansi->insert_data('kredit_log', $data2);
+				$data = array(
 					'idAkun'        => $idAkun,
 					'saldoAwal'       => $saldoAwal,
-					'keterangan'       => $keterangan,
-					'input_from'       => 'Saldo Awal'
 				);
-				$this->Model_akun->insert_log($data3);
+
+				$this->Model_akuntansi->insert_data('saldo_awal_log', $data);
 				redirect('master_data/saldo_awal');
 			}
 		} else {
-			$data = array(
+            $data3 = array(
 				'idAkun'        => $idAkun,
-				'saldoAwal'       => $saldoAwal,
+				'debit'       => $saldoAwal,
+				'keterangan'       => $keterangan,
+				'input_from'       => 'Saldo Awal'
 			);
-			$update = $this->Model_akuntansi->insert_data('saldo_awal_log', $data);
-			if ($update) {
-				$data3 = array(
+			
+			$save = $this->Model_akun->insert_log($data3);
+			if ($save) {
+				$data2 = array(
+					'idAkun'        => $idAkun,
+					'debit'       => $saldoAwal,
+					'idLog'       => $this->db->insert_id(),
+				);
+				$this->Model_akuntansi->insert_data('debit_log', $data2);
+				$data = array(
 					'idAkun'        => $idAkun,
 					'saldoAwal'       => $saldoAwal,
-					'keterangan'       => $keterangan,
-					'input_from'       => 'Saldo Awal'
 				);
-				$this->Model_akun->insert_log($data3);
+
+				$this->Model_akuntansi->insert_data('saldo_awal_log', $data);
 				redirect('master_data/saldo_awal');
 			}
-		}
+        }
+
+		// var_dump($keterangan);
+		// $saldo_ada = $this->db->get_where('saldo_awal_log', ['idAkun' => $idAkun])->row();
+
+		// echo $saldo_awal_ada;
+		// if ($saldo_ada) {
+		// 	$data = array(
+		// 		'idAkun'        => $idAkun,
+		// 		'saldoAwal'       => $saldoAwal,
+		// 	);
+		// 	$update = $this->Model_akuntansi->update_data('saldo_awal_log', $data, $idAkun, 'idAkun');
+		// 	if ($update) {
+		// 		$data3 = array(
+		// 			'idAkun'        => $idAkun,
+		// 			'saldoAwal'       => $saldoAwal,
+		// 			'keterangan'       => $keterangan,
+		// 			'input_from'       => 'Saldo Awal'
+		// 		);
+		// 		$this->Model_akun->insert_log($data3);
+		// 		redirect('master_data/saldo_awal');
+		// 	}
+		// } else {
+		// 	$data = array(
+		// 		'idAkun'        => $idAkun,
+		// 		'saldoAwal'       => $saldoAwal,
+		// 	);
+		// 	$update = $this->Model_akuntansi->insert_data('saldo_awal_log', $data);
+		// 	if ($update) {
+		// 		$data3 = array(
+		// 			'idAkun'        => $idAkun,
+		// 			'saldoAwal'       => $saldoAwal,
+		// 			'keterangan'       => $keterangan,
+		// 			'input_from'       => 'Saldo Awal'
+		// 		);
+		// 		$this->Model_akun->insert_log($data3);
+		// 		redirect('master_data/saldo_awal');
+		// 	}
+		// }
 	}
 
 	//DATA PERUSAHAAN

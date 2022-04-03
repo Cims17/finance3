@@ -16,44 +16,81 @@ class Laporan extends CI_Controller
 	{
 
 		parent::__construct();
+		$this->load->library('myfpdf');
 		if ($this->session->userdata('idUser') == null) {
 			redirect('login');
 		}
-		
 	}
 
 	public function laporan_laba_rugi()
-	{		
+	{
 		$mulai = $this->input->post('mulai');
-        $selesai = $this->input->post('selesai');
+		$selesai = $this->input->post('selesai');
 
-		if($mulai) {
+		if ($mulai) {
 			$data['jumlah_penjualan']   = $this->Model_laporan->total_penjualan_filter($selesai, $mulai)->result_array();
 			$data['jumlah_pembelian']   = $this->Model_laporan->total_pembelian_filter($selesai, $mulai)->result_array();
 			$data['tgl'] = array(
-                'mulai'      => $mulai,
-                'selesai'       => $selesai
-            );
+				'mulai'      => $mulai,
+				'selesai'       => $selesai
+			);
 			$this->load->view('template/header');
 			$this->load->view('template/sidebar');
-			$this->load->view('laporan/laba_rugi',$data);
+			$this->load->view('laporan/laba_rugi', $data);
 			$this->load->view('template/footer');
-		}else{
+		} else {
 			$data['jumlah_penjualan']   = $this->Model_laporan->total_penjualan()->result_array();
 			$data['jumlah_pembelian']   = $this->Model_laporan->total_pembelian()->result_array();
 			$data['tgl'] = array(
-                'mulai'      => '0000-00-00',
-                'selesai'       => '0000-00-00'
-            );
+				'mulai'      => '0000-00-00',
+				'selesai'       => '0000-00-00'
+			);
 
 			$this->load->view('template/header');
 			$this->load->view('template/sidebar');
-			$this->load->view('laporan/laba_rugi',$data);
+			$this->load->view('laporan/laba_rugi', $data);
 			$this->load->view('template/footer');
 		}
 
-	
-        // $data['jumlah_penjualan']   = $this->Model_laporan->total_penjualan()->result_array();
+
+		// $data['jumlah_penjualan']   = $this->Model_laporan->total_penjualan()->result_array();
+		// $data['jumlah_pembelian']   = $this->Model_laporan->total_pembelian()->result_array();
+
+		// $this->load->view('template/header');
+		// $this->load->view('template/sidebar');
+		// $this->load->view('laporan/laba_rugi',$data);
+		// $this->load->view('template/footer');
+	}
+
+	public function laporanpdf_laba_rugi()
+	{
+		$mulai = $this->input->post('mulai');
+		$selesai = $this->input->post('selesai');
+
+		if ($mulai) {
+			$data['jumlah_penjualan']   = $this->Model_laporan->total_penjualan_filter($selesai, $mulai)->result_array();
+			$data['jumlah_pembelian']   = $this->Model_laporan->total_pembelian_filter($selesai, $mulai)->result_array();
+			$data['jumlah_total'] = array_sum(array_column($data['jumlah_penjualan'],'totalPenjualan')) - array_sum(array_column($data['jumlah_pembelian'],'totalPembelian'));
+
+			$data['tgl'] = array(
+				'mulai'      => $mulai,
+				'selesai'       => $selesai
+			);
+			$this->load->view('laporan/pdf/pdf_laba_rugi_filter', $data);
+		} else {
+			$data['jumlah_penjualan']   = $this->Model_laporan->total_penjualan()->result_array();
+			$data['jumlah_pembelian']   = $this->Model_laporan->total_pembelian()->result_array();
+			$data['jumlah_total'] = array_sum(array_column($data['jumlah_penjualan'],'totalPenjualan')) - array_sum(array_column($data['jumlah_pembelian'],'totalPembelian'));
+			$data['tgl'] = array(
+				'mulai'      => '0000-00-00',
+				'selesai'       => '0000-00-00'
+			);
+
+			$this->load->view('laporan/pdf/pdf_laba_rugi_filter', $data);
+		}
+
+
+		// $data['jumlah_penjualan']   = $this->Model_laporan->total_penjualan()->result_array();
 		// $data['jumlah_pembelian']   = $this->Model_laporan->total_pembelian()->result_array();
 
 		// $this->load->view('template/header');
@@ -63,35 +100,129 @@ class Laporan extends CI_Controller
 	}
 
 	public function laporan_posisi_keuangan()
-	{	
-		$this->load->view('template/header');
-		$this->load->view('template/sidebar');
-		$this->load->view('laporan/posisi_keuangan');
-		$this->load->view('template/footer');
+	{
+		$mulai = $this->input->post('mulai');
+		$selesai = $this->input->post('selesai');
+		if (!$mulai) {
+			$this->load->view('template/header');
+			$this->load->view('template/sidebar');
+			$this->load->view('laporan/posisi_keuangan');
+			$this->load->view('template/footer');
+		} else {
+			$data['total_jenis']	= $this->Model_laporan->get_posisi_keuangan_totaljenis($mulai, $selesai)->result_array();
+			$data['total_tipe']	= $this->Model_laporan->get_posisi_keuangan_totaltipe($mulai, $selesai)->result_array();
+
+			// total tipe akun aset
+			$data['debit_aset'] =array();
+			$data['kredit_aset'] =array();
+			$data['debit_liabilitas_ekuitas'] =array();
+			$data['kredit_liabilitas_ekuitas'] =array();
+			foreach ($data['total_jenis'] as $ttl_jns) {
+                if ($ttl_jns['id_tipeAkun'] == 3) {
+                    array_push($data['debit_aset'], $ttl_jns['debit']);
+					array_push($data['kredit_aset'], $ttl_jns['kredit']);
+                }
+			}
+
+			$data['total_aset'] =array_sum($data['debit_aset']) - array_sum($data['kredit_aset']);
+
+			//total tipe aku liabilitas dan ekuitas
+			foreach ($data['total_jenis'] as $ttl_jns) {
+                if ($ttl_jns['id_tipeAkun'] == 4) {
+                    array_push($data['debit_liabilitas_ekuitas'], $ttl_jns['debit']);
+					array_push($data['kredit_liabilitas_ekuitas'], $ttl_jns['kredit']);
+                }
+			}
+
+			$data['total_liabilitas_ekuitas'] =array_sum($data['debit_liabilitas_ekuitas']) - array_sum($data['kredit_liabilitas_ekuitas']);
+
+			$data['akun']	= $this->Model_laporan->get_posisi_keuangan($mulai, $selesai)->result_array();
+			$data['jenis']	= $this->Model_akun->get_jenis_akun()->result_array();
+			$data['tipe']	= $this->Model_akun->get_tipe_akun()->result_array();
+
+			$data['nama'] = array(
+				'mulai'      => $mulai,
+				'selesai'       => $selesai,
+			);
+			$this->load->view('template/header');
+			$this->load->view('template/sidebar');
+			$this->load->view('laporan/posisi_keuangan_filter', $data);
+			$this->load->view('template/footer');
+		}
 	}
+
+	public function laporanpdf_posisi_keuangan()
+	{
+		$mulai = $this->input->post('mulai');
+		$selesai = $this->input->post('selesai');
+		if (!$mulai) {
+			$this->load->view('laporan/pdf/pdf_posisi_keuangan_filter');
+		} else {
+			$data['total_jenis']	= $this->Model_laporan->get_posisi_keuangan_totaljenis($mulai, $selesai)->result_array();
+			$data['total_tipe']	= $this->Model_laporan->get_posisi_keuangan_totaltipe($mulai, $selesai)->result_array();
+
+			// total tipe akun aset
+			$data['debit_aset'] =array();
+			$data['kredit_aset'] =array();
+			$data['debit_liabilitas_ekuitas'] =array();
+			$data['kredit_liabilitas_ekuitas'] =array();
+			foreach ($data['total_jenis'] as $ttl_jns) {
+                if ($ttl_jns['id_tipeAkun'] == 3) {
+                    array_push($data['debit_aset'], $ttl_jns['debit']);
+					array_push($data['kredit_aset'], $ttl_jns['kredit']);
+                }
+			}
+
+			$data['total_aset'] =array_sum($data['debit_aset']) - array_sum($data['kredit_aset']);
+
+			//total tipe aku liabilitas dan ekuitas
+			foreach ($data['total_jenis'] as $ttl_jns) {
+                if ($ttl_jns['id_tipeAkun'] == 4) {
+                    array_push($data['debit_liabilitas_ekuitas'], $ttl_jns['debit']);
+					array_push($data['kredit_liabilitas_ekuitas'], $ttl_jns['kredit']);
+                }
+			}
+
+			$data['total_liabilitas_ekuitas'] =array_sum($data['debit_liabilitas_ekuitas']) - array_sum($data['kredit_liabilitas_ekuitas']);
+
+			$data['akun']	= $this->Model_laporan->get_posisi_keuangan($mulai, $selesai)->result_array();
+			$data['jenis']	= $this->Model_akun->get_jenis_akun()->result_array();
+			$data['tipe']	= $this->Model_akun->get_tipe_akun()->result_array();
+
+			$data['tgl'] = array(
+				'mulai'      => $mulai,
+				'selesai'       => $selesai,
+			);
+			$this->load->view('laporan/pdf/pdf_posisi_keuangan_filter', $data);
+		}
+	}
+
 
 	public function laporan_posisi_keuangan_filter()
 	{
-        $mulai = $this->input->post('mulai');
-        $selesai = $this->input->post('selesai');
-        if (!$mulai) {
-            redirect('laporan/posisi_keuangan');
-        } else {
+		$mulai = $this->input->post('mulai');
+		$selesai = $this->input->post('selesai');
+		if (!$mulai) {
+			$this->load->view('template/header');
+			$this->load->view('template/sidebar');
+			$this->load->view('laporan/posisi_keuangan');
+			$this->load->view('template/footer');
+		} else {
 			$data['total_jenis']	= $this->Model_laporan->get_posisi_keuangan_totaljenis($mulai, $selesai)->result_array();
 			$data['akun']	= $this->Model_laporan->get_posisi_keuangan($mulai, $selesai)->result_array();
 			$data['jenis']	= $this->Model_akun->get_jenis_akun()->result_array();
 			$data['tipe']	= $this->Model_akun->get_tipe_akun()->result_array();
 
-            $data['nama'] = array(
-                'mulai'      => $mulai,
-                'selesai'       => $selesai,
-            );
-            $this->load->view('template/header');
-            $this->load->view('template/sidebar');
-            $this->load->view('laporan/posisi_keuangan_filter', $data);
-            $this->load->view('template/footer');
-        }
-    }
+			$data['nama'] = array(
+				'mulai'      => $mulai,
+				'selesai'       => $selesai,
+			);
+			$this->load->view('template/header');
+			$this->load->view('template/sidebar');
+			$this->load->view('laporan/posisi_keuangan_filter', $data);
+			$this->load->view('template/footer');
+		}
+	}
 
 	// public function export()
 	// {
@@ -225,7 +356,7 @@ class Laporan extends CI_Controller
 	// 	$spreadsheet->getActiveSheet()->setCellValue('E' . $kolom3, "Jumlah");
 	// 	$spreadsheet->getActiveSheet()->getRowDimension($kolom3)->setRowHeight(20);
 	// 	$spreadsheet->getActiveSheet()->mergeCells('E' . $kolom3 . ':G' . $kolom3);
-		
+
 	// 	$spreadsheet->getActiveSheet()->getStyle('B' . $kolom3 . ':G' . $kolom3)->getFont()->setBold(true);
 	// 	$spreadsheet->getActiveSheet()->getStyle('B' . $kolom3 . ':G' . $kolom3)->applyFromArray($styleArray);
 	// 	$kolom4 = $kolom3 +1;
@@ -250,14 +381,14 @@ class Laporan extends CI_Controller
 	// 	$spreadsheet->getActiveSheet()->getStyle('C' . $kolom6 . ':G' . $kolom6)->applyFromArray($styleArray3);
 	// 	$pengeluaran= $this->Model_laporan->get_pengeluaran($id)->row();
 	// 	$pemasukan = $this->Model_laporan->get_pemasukan($id)->row();
-		
+
 	// 	if($pengeluaran->jumlah){
 	// 		$spreadsheet->getActiveSheet()->setCellValue('E' . $kolom4, $pengeluaran->jumlah);
 	// 	}else{
 	// 		$spreadsheet->getActiveSheet()->setCellValue('E' . $kolom4, "0");
 	// 	}
 	// 	if($pemasukan->jumlah){
-			
+
 	// 		$spreadsheet->getActiveSheet()->setCellValue('E' . $kolom5, $pemasukan->jumlah);
 	// 	}else{
 	// 		$spreadsheet->getActiveSheet()->setCellValue('E' . $kolom5, "0");

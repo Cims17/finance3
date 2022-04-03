@@ -23,7 +23,10 @@ class Model_akun extends CI_Model {
 
 
     public function getsaldoAkhir(){ 
-        return $this->db->select_sum('saldoAkhir')->get('akun');
+		$this->db->select_sum('debit');
+		$this->db->select_sum('kredit');
+        $this->db->from('akun');
+        return $this->db->get();
     }
 
 	public function get_tipe_akun(){

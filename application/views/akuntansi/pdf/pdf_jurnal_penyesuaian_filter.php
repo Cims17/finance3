@@ -110,26 +110,16 @@ class RPDF extends FPDF
 			$this->Cell(100, 6, "Printed date : " . date('d-M-Y'), 0, 1, 'R', 1);
 			$this->Line(10, $this->GetY(), 200, $this->GetY());
 
-			$this->Ln(3);
-			$this->SetFont('Arial', 'B', 14);
-			$this->SetFillColor(255, 255, 255);
-			$this->Cell(0, 6, "TOKO ANITA", 0, 1, 'C', 1);
-			$this->Cell(0, 6, "Jurnal Umum Keseluruhan", 0, 1, 'C', 1);
-			$this->Ln(2);
-
-			$this->SetLineWidth(0.8);
-			$this->Line(10, $this->GetY(), 200, $this->GetY());
-			$this->SetLineWidth(0);
 		} else {
 			$this->SetFont('Arial', 'I', 9);
 			$this->SetFillColor(255, 255, 255);
-			$this->Cell(90, 6, "Jurnal Umum", 0, 0, 'L', 1);
+			$this->Cell(90, 6, "Jurnal penyesuaian", 0, 0, 'L', 1);
 			$this->Cell(100, 6, "Printed date : " . date('d-M-Y'), 0, 1, 'R', 1);
 		}
 	}
 
 	// Page Content
-	function Content($umum,$jumlah_total_debit,$jumlah_total_kredit)
+	function Content($penyesuaian,$tgl,$jumlah_total_debit,$jumlah_total_kredit)
 	{
 		$border = 0;
 		//   $this->AddPage();
@@ -138,6 +128,21 @@ class RPDF extends FPDF
 		$left = 25;
 
 		//header
+		if ($this->PageNo() == 1) {
+
+			$this->Ln(3);
+			$this->SetFont('Arial', 'B', 14);
+			$this->SetFillColor(255, 255, 255);
+			$this->Cell(0, 6, "TOKO ANITA", 0, 1, 'C', 1);
+			$this->Cell(0, 6, "Jurnal Penyesuaian", 0, 1, 'C', 1);
+			$this->Cell(0, 6, date("d-M-Y",  strtotime($tgl['mulai'])).' s/d '.date("d-M-Y",  strtotime($tgl['selesai'])),0,1,'C',1);
+			$this->Ln(2);
+
+			$this->SetLineWidth(0.8);
+			$this->Line(10, $this->GetY(), 200, $this->GetY());
+			$this->SetLineWidth(0);
+		} else {
+		}
 
 		$this->Ln(3);
 		$h = 6;
@@ -165,15 +170,15 @@ class RPDF extends FPDF
 		$this->SetAligns(array('C', 'C', 'L', 'L', 'R', 'R'));
 		$no = 1;
 		$this->SetFillColor(255);
-		foreach ($umum as $um) {
+		foreach ($penyesuaian as $ps) {
 			$this->Row(
 				array(
-					$um['tanggal'],
-					$um['kodeAkun'],
-					$um['namaAkun'],
-					$um['keterangan'],
-					"Rp.". number_format($um['debit']),
-					"Rp.". number_format($um['kredit'])
+					$ps['tanggal'],
+					$ps['kodeAkun'],
+					$ps['namaAkun'],
+					$ps['keterangan'],
+					"Rp.". number_format($ps['debit']),
+					"Rp.". number_format($ps['kredit'])
 				)
 			);
 		}
@@ -202,6 +207,6 @@ error_reporting(0);
 $this->myfpdf = new RPDF();
 $this->myfpdf->AliasNbPages();
 $this->myfpdf->AddPage();
-$this->myfpdf->SetTitle('LAPORAN JURNAL UMUM TOKO ANITA', true);
-$this->myfpdf->Content($umum,$jumlah_total_debit,$jumlah_total_kredit);
-$this->myfpdf->Output('laporan-jurnal-umum-toko-anita-keseluruhan [' . date('d-M-Y') . '].pdf', 'I');
+$this->myfpdf->SetTitle('LAPORAN JURNAL PENYESUAIAN TOKO ANITA', true);
+$this->myfpdf->Content($penyesuaian,$tgl,$jumlah_total_debit,$jumlah_total_kredit);
+$this->myfpdf->Output('laporan-jurnal-penyesuaian-toko-anita ['.date("d-M-Y",  strtotime($tgl['mulai'])).' s/d '.date("d-M-Y",  strtotime($tgl['selesai'])).'].pdf', 'I');

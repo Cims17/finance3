@@ -52,7 +52,7 @@
                       <td><?= $ak['kodeAkun'] ?></td>
                       <td><?= $ak['namaJenis'] ?></td>
                       <td><?= $ak['namaAkun'] ?></td>
-                      <td>Rp <?= number_format($ak['saldoAkhir'], 0, ",", ",") ?></td>
+                      <td>Rp <?= number_format($ak['debit']-$ak['kredit'], 0, ",", ",") ?></td>
                       <td>
 												<button type="button" data-toggle="modal" data-target="#detail-info<?= $ak['idAkun'] ?>" class="btn btn-info d-flex align-items-center">
 														<i class="fas fa-info-circle mr-2"></i>
@@ -123,7 +123,7 @@
 											Rp
 									</div>
                 </div>
-                <input type="text" class="form-control" value="<?= number_format($ak['saldoAkhir'], 0, ",", ",") ?>" readonly>
+                <input type="text" class="form-control" value="<?= number_format($ak['debit']-$ak['kredit'], 0, ",", ",") ?>" readonly>
               </div>
             </div>
 						<div class="form-group">

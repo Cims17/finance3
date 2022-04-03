@@ -14,7 +14,7 @@ class Dashboard extends CI_Controller {
 
     public function index(){
 		$data['akun'] = $this->Model_akun->get_akun()->num_rows();
-		$data['saldo'] = $this->Model_akun->getsaldoAkhir()->row();
+		$data['saldo'] = $this->Model_akun->getsaldoAkhir()->result_array();
 		$data['penjualan'] = $this->db->select('*')->get('penjualan')->num_rows();
 		
         $this->load->view('template/header');

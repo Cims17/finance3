@@ -14,10 +14,10 @@
                             <div class="row">
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <label for="">Kode Akun</label>
+                                        <label for="">Nama Akun</label>
                                         <select class="form-control select2" name="idAkun">
                                             <?php foreach ($akun as $ak ): ?>
-                                            <option value="<?=$ak['idAkun']?>"><?=$ak['kodeAkun']?></option>
+                                            <option value="<?=$ak['idAkun']?>"><?=$ak['namaAkun']?></option>
                                             <?php endforeach ?>
                                         </select>
                                     </div>

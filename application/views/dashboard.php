@@ -31,7 +31,7 @@
                                 <div class="row ">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
                                         <div class="card-content">
-                                            <h5 class="font-15"> Total Penjualan</h5>
+                                            <h5 class="font-15"> Total Transaksi Penjualan</h5>
                                                 <h2 class="mb-3 font-18"><?=$penjualan?></h2>
                                             </div>
                                     </div>
@@ -54,7 +54,9 @@
                                         <div class="card-content">
                                             <h5 class="font-15">Saldo</h5>
                                                 <h2 class="mb-3 font-18 ">
-                                                Rp <?= number_format($saldo->saldoAkhir, 0, ",", ",") ?></h2>
+												<?php foreach ($saldo as $sal) { ?>
+                                                Rp <?= number_format($sal['debit'] - $sal['kredit'], 0, ",", ",") ?></h2>
+												<?php } ?>
                                             
                                         </div>
                                     </div>

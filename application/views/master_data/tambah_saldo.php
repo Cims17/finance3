@@ -15,9 +15,12 @@
 								<label for="">Akun</label>
 								<select type="text" class="form-control select2" name="idAkun" id="idAkun">
 									<option value="" selected disabled>Pilih Akun</option>
-									<?php foreach ($akun as $ak) : ?>
+									
+									<?php foreach ($akun as $ak) { ?>
+										<?php if($ak['saldoAwal'] == 0 ) { ?>
 										<option value="<?= $ak['idAkun'] ?>"><?= $ak['namaAkun'] ?> </option>
-									<?php endforeach ?>
+									<?php } } ?>
+									
 								</select>
 							</div>
 							<div class="form-group">
@@ -33,16 +36,11 @@
 
 							</div>
 							<div class="form-group">
-								<label for="">Saldo Akhir</label>
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<div class="input-group-text">
-											Rp
-										</div>
-									</div>
-
-									<input type="text" class="form-control" name="saldoAkhir" id='saldoAkhir' readonly>
-								</div>
+								<label for="">Jenis Saldo</label>
+								<select class="form-control select2" name="jenisSaldo">
+									<option value="Kredit">Kredit</option>
+									<option value="Debit">Debit</option>
+								</select>
 							</div>
 							<div class="form-group">
 								<label for="">Keterangan</label>
