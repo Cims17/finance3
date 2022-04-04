@@ -52,7 +52,11 @@
 											<td><?= $ak['kodeAkun'] ?></td>
 											<td><?= $ak['namaJenis'] ?></td>
 											<td><?= $ak['namaAkun'] ?></td>
-											<td>Rp <?= number_format($ak['debit'] - $ak['kredit'], 0, ",", ",") ?></td>
+											<?php if ($ak['debit'] - $ak['kredit'] < 0) { ?>
+												<td>Rp <?= number_format(($ak['debit'] - $ak['kredit']) * -1, 0, ",", ",") ?></td>
+											<?php } else { ?>
+												<td>Rp <?= number_format($ak['debit'] - $ak['kredit'], 0, ",", ",") ?></td>
+											<?php } ?>
 											<td class="d-flex">
 												<button type="button" data-toggle="modal" data-target="#detail-info<?= $ak['idAkun'] ?>" class="btn btn-info d-flex align-items-center mr-2">
 													<i class="fas fa-info-circle mr-2"></i>
@@ -206,7 +210,12 @@
 										Rp
 									</div>
 								</div>
-								<input type="text" class="form-control" value="<?= number_format($ak['debit'] - $ak['kredit'], 0, ",", ",") ?>" readonly>
+								<?php if ($ak['debit'] - $ak['kredit'] < 0) { ?>
+									<input type="text" class="form-control" value="<?= number_format($ak['debit'] - $ak['kredit'] * -1, 0, ",", ",") ?>" readonly>
+								<?php } else { ?>
+									<input type="text" class="form-control" value="<?= number_format($ak['debit'] - $ak['kredit'], 0, ",", ",") ?>" readonly>
+								<?php } ?>
+								
 							</div>
 						</div>
 						<div class="form-group">

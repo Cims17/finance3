@@ -210,7 +210,7 @@ class Master_Data extends CI_Controller
                     'kredit'       => $saldoAwal,
                     
                 );
-                $save = $this->Model_laporan->update_data('log_akun', $data3, $id, 'idLog');
+                $save = $this->Model_laporan->update_data('log_akun', $data3, $idLog, 'idLog');
                 if ($save) {
                     $data = array(
                         'kredit'       => $saldoAwal,
@@ -413,13 +413,15 @@ class Master_Data extends CI_Controller
 
 	public function edit_jenis_akun()
 	{
-		$jenis = $this->input->post('jenis');
-		$kode  = $this->input->post('kode');
-		$id    = $this->input->post('id');
+		$jenis 			= $this->input->post('jenis');
+		$kode  			= $this->input->post('kode');
+		$id				= $this->input->post('id');
+		$id_tipeAkun	= $this->input->post('id_tipeakun');
 
 		$data = array(
-			'namaJenis'	=> $jenis,
-			'kodeJenis'	=> $kode,
+			'namaJenis'		=> $jenis,
+			'kodeJenis'		=> $kode,
+			'id_tipeAkun'	=> $id_tipeAkun,
 		);
 
 		$save = $this->Model_akun->update($data, 'jenis_akun', $id, 'idJenis');
@@ -554,7 +556,7 @@ class Master_Data extends CI_Controller
 	public function tambah_barang_beli($nama, $jml)
 	{
 		$data['jenis']	= $this->Model_akun->get_jenis()->result_array();
-		$data['nama']	= $nama;
+		$data['nama']	= str_replace("_", " ", $nama);
 		$data['jml']	= $jml;
 
 		$this->load->view('template/header');

@@ -133,7 +133,7 @@
 												if (in_array($pbdt['namaBarang'], $namabarang)) { ?>
 
 												<?php } else { ?>
-													<a href="<?= base_url() ?>master_data/tambah_barang_beli/<?= $pbdt['namaBarang'] ?>/<?= $pbdt['kuantitas'] ?>">
+													<a href="<?= base_url() ?>master_data/tambah_barang_beli/<?= str_replace(" ", "_", $pbdt['namaBarang']) ?>/<?= $pbdt['kuantitas'] ?>">
 														<div class="btn btn-success"><i class="fas fa-plus-circle mr-2"></i>Tambah Barang</div>
 													</a>
 												<?php } ?>

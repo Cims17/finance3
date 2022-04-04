@@ -69,6 +69,18 @@ class Model_laporan extends CI_Model
 		return $this->db->get();
 	}
 
+	public function get_posisi_keuangan_all()
+	{
+		$this->db->select('akun.idAkun, akun.kodeAkun, akun.saldoAwal,akun.namaAkun,akun.idJenis, akun.saldoAkhir, jenis_akun.namaJenis, jenis_akun.kodeJenis');
+		$this->db->select_sum('log_akun.kredit');
+		$this->db->select_sum('log_akun.debit');
+		$this->db->from('akun,jenis_akun,log_akun');
+		$this->db->where('akun.idJenis = jenis_akun.idJenis');
+		$this->db->where('akun.idAkun = log_akun.idAkun');
+		$this->db->group_by("idAkun");
+		return $this->db->get();
+	}
+
 	// public function get_posisi_keuangan_totaljenis($mulai, $selesai){
 		// $this->db->select('jenis_akun.idJenis, jenis_akun.kodeJenis, jenis_akun.namaJenis');
 	// 	$this->db->select_sum('akun.saldoAwal');
@@ -95,6 +107,20 @@ class Model_laporan extends CI_Model
 		$this->db->where('akun.idAkun = log_akun.idAkun');
 		$this->db->where('log_akun.tanggal <=', $selesai);
 		$this->db->where('log_akun.tanggal >=', $mulai);
+		$this->db->group_by("idJenis");
+		return $this->db->get();
+	}
+
+	public function get_posisi_keuangan_totaljenis_all()
+	{
+		$this->db->select('tipe_akun.id_tipeAkun, tipe_akun.nama_tipeAkun');
+		$this->db->select('jenis_akun.idJenis');
+		$this->db->select_sum('log_akun.debit');
+		$this->db->select_sum('log_akun.kredit');
+		$this->db->from('jenis_akun,tipe_akun, akun, log_akun');
+		$this->db->where('tipe_akun.id_tipeAkun = jenis_akun.id_tipeAkun');
+		$this->db->where('jenis_akun.idJenis = akun.idJenis');
+		$this->db->where('akun.idAkun = log_akun.idAkun');
 		$this->db->group_by("idJenis");
 		return $this->db->get();
 	}

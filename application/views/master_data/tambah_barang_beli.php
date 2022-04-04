@@ -10,7 +10,7 @@
 
 					</div>
 					<div class="card-body">
-						<form action="<?php base_url() ?>save_barang" method="post" enctype="multipart/form-data">
+						<form action="<?php echo base_url() ?>master_data/save_barang" method="post" enctype="multipart/form-data">
 							<div class="row">
 								<div class="col-6">
 									<div class="form-group">

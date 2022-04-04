@@ -49,17 +49,34 @@
 									</tr>
 									<tr>
 										<td class="text-center border-bottom"></td>
-										<td class="text-left border-bottom"><span class="ml-5">Penjualan</span></td>
+										<td class="text-left border-bottom">Penjualan</td>
 										<td class="text-right border-bottom" colspan="2">
 											<?php foreach ($jumlah_penjualan as $jml_pjl); ?>
 											Rp. <?= number_format($jml_pjl['totalPenjualan'], 0, '', '.') ?>
 										</td>
 										<td class="border-bottom"></td>
 									</tr>
+									<?php foreach ($jenis as $jns) : ?>
+												<?php if ($jns['id_tipeAkun'] == 5) : ?>
+													<?php foreach ($akun as $ak) : ?>
+														<?php if ($jns['idJenis'] == $ak['idJenis']) : ?>
+															<tr>
+																<td class="border-bottom"></td>
+																<td class="text-left border-bottom"><?= $ak['kodeAkun'] ?></td>
+																<td class="text-left border-bottom"><?= $ak['namaAkun'] ?></td>
+																<td class="text-right border-bottom">
+																	Rp. <?= number_format($ak['debit'] - $ak['kredit'], 0, '', '.') ?>
+																</td>
+																<td class="border-bottom"></td>
+															</tr>
+
+														<?php endif ?>
+													<?php endforeach ?>
+												<?php endif ?>
+											<?php endforeach ?>
 									<tr>
-										<th class="border-bottom"></th>
-										<th class="text-left border-bottom" colspan="3">Total Pendapatan</th>
-										<th class="text-center border-bottom">Rp. <?= number_format($jml_pjl['totalPenjualan'], 0, '', '.') ?></th>
+										<th class="text-left border-bottom" colspan="4">Total Pendapatan</th>
+										<th class="text-center border-bottom" colspan="1">Rp. <?= number_format($jml_pjl['totalPenjualan'] - $total_hpp, 0, '', '.') ?></th>
 									</tr>
 									<tr>
 										<th class="text-left border-bottom" colspan="2"><span>Beban</span></th>
@@ -67,22 +84,38 @@
 									</tr>
 									<tr>
 										<td class="text-center border-bottom"></td>
-										<td class="text-left border-bottom"><span class="ml-5">Pembelian</span></td>
+										<td class="text-left border-bottom">Pembelian</td>
 										<td class="text-right border-bottom" colspan="2">
 											<?php foreach ($jumlah_pembelian as $jml_pbl); ?>
 											Rp. <?= number_format($jml_pbl['totalPembelian'], 0, '', '.') ?>
 										</td>
 										<td class="border-bottom"></td>
 									</tr>
+									<?php foreach ($jenis as $jns) : ?>
+												<?php if ($jns['id_tipeAkun'] == 2) : ?>
+													<?php foreach ($akun as $ak) : ?>
+														<?php if ($jns['idJenis'] == $ak['idJenis']) : ?>
+															<tr>
+																<td class="border-bottom"></td>
+																<td class="text-left border-bottom"><?= $ak['kodeAkun'] ?></td>
+																<td class="text-left border-bottom"><?= $ak['namaAkun'] ?></td>
+																<td class="text-right border-bottom">
+																	Rp. <?= number_format($ak['debit'] - $ak['kredit'], 0, '', '.') ?>
+																</td>
+																<td class="border-bottom"></td>
+															</tr>
+
+														<?php endif ?>
+													<?php endforeach ?>
+												<?php endif ?>
+											<?php endforeach ?>
 									<tr>
-										<th class="border-bottom"></th>
-										<th class="text-left border-bottom" colspan="3">Total Beban</th>
-										<th class="text-center border-bottom">Rp. <?= number_format($jml_pbl['totalPembelian'], 0, '', '.') ?></th>
+										<th class="text-left border-bottom" colspan="4">Total Beban</th>
+										<th class="text-center border-bottom">Rp. <?= number_format($jml_pbl['totalPembelian'] + $total_beban, 0, '', '.') ?></th>
 									</tr>
 									<tr>
-										<th class="text-center"></th>
-										<th class="text-left " colspan="3">Laba / Rugi Bersih</th>
-										<th class="text-center">Rp. <?= number_format($jml_pjl['totalPenjualan'] - $jml_pbl['totalPembelian'], 0, '', '.') ?></td>
+										<th class="text-left " colspan="4">Laba / Rugi Bersih</th>
+										<th class="text-center">Rp. <?= number_format(($jml_pjl['totalPenjualan'] - $total_hpp) - ($jml_pbl['totalPembelian'] + $total_beban), 0, '', '.') ?></td>
 									</tr>
 								</tbody>
 							</table>

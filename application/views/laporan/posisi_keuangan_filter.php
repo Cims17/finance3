@@ -75,7 +75,7 @@
 															<tr>
 																<td class="border-bottom"></td>
 																<td class="text-left border-bottom"><?= $ak['kodeAkun'] ?></td>
-																<td class="text-left border-bottom" style="width:50%"><?= $ak['namaAkun'] ?></td>
+																<td class="text-left border-bottom" style="width:45%"><?= $ak['namaAkun'] ?></td>
 																<td class="text-right border-bottom">
 																	Rp. <?= number_format($ak['debit'] - $ak['kredit'], 0, '', '.') ?>
 																</td>
@@ -97,10 +97,10 @@
 												<?php } ?>
 											<?php } ?>
 											<tr>
-												<th class="text-left border-bottom" colspan="4">
+												<th class="text-left border-bottom" colspan="3">
 													<h4>Total Aset</h4>
 												</th>
-												<th class="text-center border-bottom">
+												<th class="text-center border-bottom" colspan="2">
 													<h4>Rp. <?= number_format($total_aset, 0, '', '.') ?></h4>
 												</th>
 											</tr>
@@ -142,10 +142,10 @@
 												<?php endif ?>
 											<?php endforeach ?>
 											<tr>
-												<th class="text-left border-bottom" colspan="4">
+												<th class="text-left border-bottom" colspan="3">
 													<h4>Total Liabilitas dan Ekuitas</h4>
 												</th>
-												<th class="text-center border-bottom">
+												<th class="text-center border-bottom" colspan="2">
 													<h4>Rp. <?= number_format($total_liabilitas_ekuitas, 0, '', '.') ?></h4>
 												</th>
 											</tr>

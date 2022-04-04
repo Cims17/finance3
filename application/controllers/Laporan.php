@@ -30,10 +30,37 @@ class Laporan extends CI_Controller
 		if ($mulai) {
 			$data['jumlah_penjualan']   = $this->Model_laporan->total_penjualan_filter($selesai, $mulai)->result_array();
 			$data['jumlah_pembelian']   = $this->Model_laporan->total_pembelian_filter($selesai, $mulai)->result_array();
+			$data['total_jenis']		= $this->Model_laporan->get_posisi_keuangan_totaljenis($mulai, $selesai)->result_array();
+			$data['jenis']	= $this->Model_akun->get_jenis_akun()->result_array();
+			$data['akun']	= $this->Model_laporan->get_posisi_keuangan($mulai, $selesai)->result_array();
 			$data['tgl'] = array(
 				'mulai'      => $mulai,
 				'selesai'       => $selesai
 			);
+
+			// total tipe akun aset
+			$data['debit_beban'] =array();
+			$data['kredit_beban'] =array();
+			$data['debit_hpp'] =array();
+			$data['kredit_hpp'] =array();
+			foreach ($data['total_jenis'] as $ttl_jns) {
+                if ($ttl_jns['id_tipeAkun'] == 2) {
+                    array_push($data['debit_beban'], $ttl_jns['debit']);
+					array_push($data['kredit_beban'], $ttl_jns['kredit']);
+                }
+			}
+
+			//total tipe aku HPP
+			foreach ($data['total_jenis'] as $ttl_jns) {
+                if ($ttl_jns['id_tipeAkun'] == 5) {
+                    array_push($data['debit_hpp'], $ttl_jns['debit']);
+					array_push($data['kredit_hpp'], $ttl_jns['kredit']);
+                }
+			}
+
+			$data['total_beban'] =array_sum($data['debit_beban']) - array_sum($data['kredit_beban']);
+			$data['total_hpp'] =array_sum($data['debit_hpp']) - array_sum($data['kredit_hpp']);
+
 			$this->load->view('template/header');
 			$this->load->view('template/sidebar');
 			$this->load->view('laporan/laba_rugi', $data);
@@ -41,10 +68,36 @@ class Laporan extends CI_Controller
 		} else {
 			$data['jumlah_penjualan']   = $this->Model_laporan->total_penjualan()->result_array();
 			$data['jumlah_pembelian']   = $this->Model_laporan->total_pembelian()->result_array();
+			$data['total_jenis']		= $this->Model_laporan->get_posisi_keuangan_totaljenis_all()->result_array();
+			$data['jenis']	= $this->Model_akun->get_jenis_akun()->result_array();
+			$data['akun']	= $this->Model_laporan->get_posisi_keuangan_all()->result_array();
 			$data['tgl'] = array(
 				'mulai'      => '0000-00-00',
 				'selesai'       => '0000-00-00'
 			);
+
+			// total tipe akun aset
+			$data['debit_beban'] =array();
+			$data['kredit_beban'] =array();
+			$data['debit_hpp'] =array();
+			$data['kredit_hpp'] =array();
+			foreach ($data['total_jenis'] as $ttl_jns) {
+                if ($ttl_jns['id_tipeAkun'] == 2) {
+                    array_push($data['debit_beban'], $ttl_jns['debit']);
+					array_push($data['kredit_beban'], $ttl_jns['kredit']);
+                }
+			}
+
+			//total tipe aku HPP
+			foreach ($data['total_jenis'] as $ttl_jns) {
+                if ($ttl_jns['id_tipeAkun'] == 5) {
+                    array_push($data['debit_hpp'], $ttl_jns['debit']);
+					array_push($data['kredit_hpp'], $ttl_jns['kredit']);
+                }
+			}
+
+			$data['total_beban'] =array_sum($data['debit_beban']) - array_sum($data['kredit_beban']);
+			$data['total_hpp'] =array_sum($data['debit_hpp']) - array_sum($data['kredit_hpp']);
 
 			$this->load->view('template/header');
 			$this->load->view('template/sidebar');
@@ -70,21 +123,72 @@ class Laporan extends CI_Controller
 		if ($mulai) {
 			$data['jumlah_penjualan']   = $this->Model_laporan->total_penjualan_filter($selesai, $mulai)->result_array();
 			$data['jumlah_pembelian']   = $this->Model_laporan->total_pembelian_filter($selesai, $mulai)->result_array();
-			$data['jumlah_total'] = array_sum(array_column($data['jumlah_penjualan'],'totalPenjualan')) - array_sum(array_column($data['jumlah_pembelian'],'totalPembelian'));
-
+			$data['total_jenis']		= $this->Model_laporan->get_posisi_keuangan_totaljenis($mulai, $selesai)->result_array();
+			$data['jenis']	= $this->Model_akun->get_jenis_akun()->result_array();
+			$data['akun']	= $this->Model_laporan->get_posisi_keuangan($mulai, $selesai)->result_array();
 			$data['tgl'] = array(
 				'mulai'      => $mulai,
 				'selesai'       => $selesai
 			);
+
+			// total tipe akun aset
+			$data['debit_beban'] =array();
+			$data['kredit_beban'] =array();
+			$data['debit_hpp'] =array();
+			$data['kredit_hpp'] =array();
+			foreach ($data['total_jenis'] as $ttl_jns) {
+                if ($ttl_jns['id_tipeAkun'] == 2) {
+                    array_push($data['debit_beban'], $ttl_jns['debit']);
+					array_push($data['kredit_beban'], $ttl_jns['kredit']);
+                }
+			}
+
+			//total tipe aku HPP
+			foreach ($data['total_jenis'] as $ttl_jns) {
+                if ($ttl_jns['id_tipeAkun'] == 5) {
+                    array_push($data['debit_hpp'], $ttl_jns['debit']);
+					array_push($data['kredit_hpp'], $ttl_jns['kredit']);
+                }
+			}
+
+			$data['total_beban'] =array_sum($data['debit_beban']) - array_sum($data['kredit_beban']);
+			$data['total_hpp'] =array_sum($data['debit_hpp']) - array_sum($data['kredit_hpp']);
+
 			$this->load->view('laporan/pdf/pdf_laba_rugi_filter', $data);
+
 		} else {
 			$data['jumlah_penjualan']   = $this->Model_laporan->total_penjualan()->result_array();
 			$data['jumlah_pembelian']   = $this->Model_laporan->total_pembelian()->result_array();
-			$data['jumlah_total'] = array_sum(array_column($data['jumlah_penjualan'],'totalPenjualan')) - array_sum(array_column($data['jumlah_pembelian'],'totalPembelian'));
+			$data['total_jenis']		= $this->Model_laporan->get_posisi_keuangan_totaljenis_all()->result_array();
+			$data['jenis']	= $this->Model_akun->get_jenis_akun()->result_array();
+			$data['akun']	= $this->Model_laporan->get_posisi_keuangan_all()->result_array();
 			$data['tgl'] = array(
 				'mulai'      => '0000-00-00',
 				'selesai'       => '0000-00-00'
 			);
+
+			// total tipe akun aset
+			$data['debit_beban'] =array();
+			$data['kredit_beban'] =array();
+			$data['debit_hpp'] =array();
+			$data['kredit_hpp'] =array();
+			foreach ($data['total_jenis'] as $ttl_jns) {
+                if ($ttl_jns['id_tipeAkun'] == 2) {
+                    array_push($data['debit_beban'], $ttl_jns['debit']);
+					array_push($data['kredit_beban'], $ttl_jns['kredit']);
+                }
+			}
+
+			//total tipe aku HPP
+			foreach ($data['total_jenis'] as $ttl_jns) {
+                if ($ttl_jns['id_tipeAkun'] == 5) {
+                    array_push($data['debit_hpp'], $ttl_jns['debit']);
+					array_push($data['kredit_hpp'], $ttl_jns['kredit']);
+                }
+			}
+
+			$data['total_beban'] =array_sum($data['debit_beban']) - array_sum($data['kredit_beban']);
+			$data['total_hpp'] =array_sum($data['debit_hpp']) - array_sum($data['kredit_hpp']);
 
 			$this->load->view('laporan/pdf/pdf_laba_rugi_filter', $data);
 		}

@@ -134,6 +134,22 @@
                 <div class="modal-body">
                     <form action="<?php base_url() ?>edit_jenis_akun" method="post" enctype="multipart/form-data">
 					<input type="text" class="form-control" name="id" value="<?php echo $jns['idJenis'] ?>" required hidden>
+					<div class="form-group">
+						<label>Tipe Jenis</label>
+						<div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                            </div>
+                            <select type="text" class="form-control" name="id_tipeakun" id="id_tipeakun">
+								<option value="" disabled selected>Pilih Tipe Jenis</option>
+								<?php foreach ($tipe as $tp) : ?>
+									<option value="<?= $tp['id_tipeAkun'] ?>" <?php echo ($tp['id_tipeAkun'] === $jns['id_tipeAkun']) ? 'selected' : '' ?>><?= $tp['nama_tipeAkun'] ?> </option>
+								<?php endforeach ?>
+							</select>
+                        </div>
+					</div>
                         <div class="form-group">
                             <label>Nama Jenis</label>
                             <div class="input-group">
