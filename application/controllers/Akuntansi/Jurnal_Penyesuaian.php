@@ -56,16 +56,19 @@ class Jurnal_Penyesuaian extends CI_Controller
 
 	public function save_jurnal_penyesuaian()
 	{
-		$idAkun = $this->input->post('idAkun');
-		$saldo = $this->input->post('jenisSaldo');
-		$nominal = $this->input->post('nominal');
+		$idAkun 	= $this->input->post('idAkun');
+		$saldo 		= $this->input->post('jenisSaldo');
+		$saldoAwal	= $this->input->post('nominal');
+		$nominal 	= filter_var($saldoAwal, FILTER_SANITIZE_NUMBER_INT);
 		$keterangan = $this->input->post('keterangan');
+		$tanggal	= $this->input->post('tanggal');
 		if ($saldo == "Kredit") {
 			$data3 = array(
 				'idAkun'        => $idAkun,
 				'kredit'       => $nominal,
 				'keterangan'       => $keterangan,
-				'input_from'       => 'Jurnal Penyesuaian'
+				'input_from'       => 'Jurnal Penyesuaian',
+				'tanggal'		=> $tanggal,
 			);
 			$save = $this->Model_akun->insert_log($data3);
 			if ($save) {
@@ -73,6 +76,7 @@ class Jurnal_Penyesuaian extends CI_Controller
 					'idAkun'        => $idAkun,
 					'kredit'       => $nominal,
 					'idLog'       => $this->db->insert_id(),
+					'tanggal'		=> $tanggal,
 				);
 
 				$this->Model_akuntansi->insert_data('kredit_log', $data);
@@ -83,7 +87,8 @@ class Jurnal_Penyesuaian extends CI_Controller
 				'idAkun'        => $idAkun,
 				'debit'       => $nominal,
 				'keterangan'       => $keterangan,
-				'input_from'       => 'Jurnal Penyesuaian'
+				'input_from'       => 'Jurnal Penyesuaian',
+				'tanggal'		=> $tanggal,
 			);
 			$save = $this->Model_akun->insert_log($data3);
 
@@ -92,6 +97,7 @@ class Jurnal_Penyesuaian extends CI_Controller
 					'idAkun'        => $idAkun,
 					'debit'       => $nominal,
 					'idLog'       => $this->db->insert_id(),
+					'tanggal'		=> $tanggal,
 				);
 				$this->Model_akuntansi->insert_data('debit_log', $data);
 				redirect('akuntansi/jurnal_penyesuaian');

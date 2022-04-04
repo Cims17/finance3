@@ -119,9 +119,9 @@
 												<?php echo date("Y-m-d", strtotime($ps['tanggal']));  ?>
 											</td>
 											<td>
-												<?= $ps['debit'] ?>
+											Rp <?= number_format($ps['debit'] , 0, ",", ",") ?>
 											</td>
-											<td><?= $ps['kredit'] ?></td>
+											<td>Rp <?= number_format($ps['debit'] , 0, ",", ",") ?></td>
 											<td>
 												<?= $ps['input_from'] ?>
 											</td>

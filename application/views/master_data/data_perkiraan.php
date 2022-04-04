@@ -48,13 +48,13 @@
                                             <td>
                                                 <?php
                                                 if ($ak['debit']) {
-                                                    echo $ak['debit'];
+													echo 'Rp '.  number_format($ak['debit'], 0, ",", ",");
                                                 } else {
                                                     echo "-";
                                                 } ?></td>
                                             <td><?php
                                                 if ($ak['kredit']) {
-                                                    echo $ak['kredit'];
+													echo 'Rp '.  number_format($ak['kredit'], 0, ",", ",");
                                                 } else {
                                                     echo "-";
                                                 } ?></td>
