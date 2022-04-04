@@ -15,10 +15,10 @@
 						</div>
 
 					</div>
-					<div class="card-body">'
+					<div class="card-body">
 						<div class="d-flex">
 							<div class="form-group">
-								<label>Periode Akuntansi</label>
+								<label>Periode Akuntansi (Pilih Tanggal Untuk Melihat Jurnal Penyesuaian)</label>
 								<form action="<?php base_url() ?>jurnal_penyesuaian" enctype="multipart/form-data" method="post">
 									<div class="d-flex align-items-center">
 
@@ -55,45 +55,7 @@
 										<th>Kredit</th>
 									</tr>
 								</thead>
-								<tbody><?php
-										$i = 1;
-										foreach ($penyesuaian as $ps) : ?>
-										<tr id="<?= $ps['idLog'] ?>">
-											<td class="text-center">
-												<?= $i++ ?>
-											</td>
-											<td><?= $ps['namaAkun'] ?> </td>
-											<td>
-												<?= $ps['kodeAkun'] ?>
-											</td>
-											<td>
-												<?= $ps['keterangan'] ?>
-											</td>
-											<td>
-												<?= $ps['tanggal'] ?>
-											</td>
-											<td>
-												<?= $ps['debit'] ?>
-											</td>
-											<td><?= $ps['kredit'] ?></td>
-											<td class="d-flex">
-												<a href="<?= base_url() ?>akuntansi/jurnal_penyesuaian/edit_jurnal_penyesuaian/<?= $ps['idLog'] ?>">
-													<div class="btn btn-primary d-flex align-items-center mr-2">
-														<i class="fas fa-edit mr-2"></i>
-														Edit
-													</div>
-												</a>
-												<div class="btn btn-danger d-flex align-items-center remove">
-													<i class="far fa-trash-alt mr-2"></i>
-													Hapus
-												</div>
-
-											</td>
-
-
-
-										</tr>
-									<?php endforeach ?>
+								<tbody>
 								</tbody>
 							</table>
 						</div>
@@ -159,36 +121,3 @@
     </div>
   </div>
 </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript">
-    $(".remove").click(function() {
-        var id = $(this).parents("tr").attr("id");
-        swal({
-            title: "Hapus Data?",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        }).then((willDelete) => {
-            if (willDelete) {
-                $.ajax({
-                    url: '<?= base_url() ?>akuntansi/jurnal_penyesuaian/delete_jurnal_penyesuaian/' + id,
-                    type: 'DELETE',
-                    error: function() {
-                        alert('Something is wrong');
-                    },
-                    success: function(data) {
-                        swal({
-                            title: "Data Telah Terhapus"
-                        }).then(function() {
-                            location.reload();
-                        });
-                    }
-                });
-            } else {
-                // swal("Batal");
-            }
-        });
-    });
-</script>
-

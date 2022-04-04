@@ -5,21 +5,22 @@
 				<div class="card">
 					<div class="card-header d-flex justify-content-between">
 						<h4>
-							Jurnal Penyesuaian
+							Jurnal Umum
 						</h4>
 						<div class="d-flex">
 						<button type="button" data-toggle="modal" data-target="#cetakpdf" class="btn btn-warning mr-2"><i class="fas fa-print mr-2"></i></i>Cetak PDF</button>
-							<a href="<?= base_url() ?>akuntansi/jurnal_penyesuaian/tambah_jurnal_penyesuaian">
+							<a href="<?= base_url() ?>akuntansi/jurnal_umum/tambah_jurnal_umum">
 								<div class="btn btn-success"><i class="fas fa-plus-circle mr-2"></i>Tambah Data</div>
 							</a>
+
 						</div>
 
 					</div>
-					<div class="card-body">'
+					<div class="card-body">
 						<div class="d-flex">
 							<div class="form-group">
-								<label>Periode Akuntansi</label>
-								<form action="<?php base_url() ?>jurnal_penyesuaian" enctype="multipart/form-data" method="post">
+								<label>Periode Akuntansi (Pilih Tanggal Untuk Melihat Jurnal Umum)</label>
+								<form action="<?php base_url() ?>jurnal_umum" enctype="multipart/form-data" method="post">
 									<div class="d-flex align-items-center">
 
 										<input type="date" class="form-control mr-3" name="mulai" value="<?= $tgl['mulai'] ?>">
@@ -33,21 +34,21 @@
 										</button>
 									</div>
 								</form>
+								
 							</div>
 						</div>
 						<div class="table-responsive">
 							<table class="table table-striped" id="table-1">
 								<thead>
 									<tr>
-										<th rowspan="2">
-											Kode
+										<th class="text-center" rowspan="2">
+											No.
 										</th>
 										<th rowspan="2">Nama Akun</th>
-										<th rowspan="2">No</th>
+										<th rowspan="2">No. Akun</th>
 										<th rowspan="2">Keterangan</th>
 										<th rowspan="2">Tanggal</th>
-
-										<th colspan="2" class="text-center">Saldo</th>
+										<th colspan="2">Saldo</th>
 										<th rowspan="2">Aksi</th>
 									</tr>
 									<tr class="text-center">
@@ -55,45 +56,8 @@
 										<th>Kredit</th>
 									</tr>
 								</thead>
-								<tbody><?php
-										$i = 1;
-										foreach ($penyesuaian as $ps) : ?>
-										<tr id="<?= $ps['idLog'] ?>">
-											<td class="text-center">
-												<?= $i++ ?>
-											</td>
-											<td><?= $ps['namaAkun'] ?> </td>
-											<td>
-												<?= $ps['kodeAkun'] ?>
-											</td>
-											<td>
-												<?= $ps['keterangan'] ?>
-											</td>
-											<td>
-												<?= $ps['tanggal'] ?>
-											</td>
-											<td>
-												<?= $ps['debit'] ?>
-											</td>
-											<td><?= $ps['kredit'] ?></td>
-											<td class="d-flex">
-												<a href="<?= base_url() ?>akuntansi/jurnal_penyesuaian/edit_jurnal_penyesuaian/<?= $ps['idLog'] ?>">
-													<div class="btn btn-primary d-flex align-items-center mr-2">
-														<i class="fas fa-edit mr-2"></i>
-														Edit
-													</div>
-												</a>
-												<div class="btn btn-danger d-flex align-items-center remove">
-													<i class="far fa-trash-alt mr-2"></i>
-													Hapus
-												</div>
-
-											</td>
-
-
-
-										</tr>
-									<?php endforeach ?>
+								<tbody>
+										
 								</tbody>
 							</table>
 						</div>
@@ -110,13 +74,13 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="formModal">Cetak PDF Jurnal Penyesuaian</h5>
+        <h5 class="modal-title" id="formModal">Cetak PDF Jurnal Umum</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form action="<?php echo base_url() ?>akuntansi/laporan_akuntansi/pdf_jurnal_penyesuaian" enctype="multipart/form-data" method="post" target="_blank">
+        <form action="<?php echo base_url() ?>akuntansi/laporan_akuntansi/pdf_jurnal_umum_all" enctype="multipart/form-data" method="post" target="_blank">
           <div class="form-group">
             <label>Tanggal Mulai</label>
             <div class="input-group">
@@ -148,7 +112,7 @@
               <i class="fas fa-print my-auto mr-2"></i>
               Cetak
             </button>
-			<a href="<?php echo base_url() ?>akuntansi/laporan_akuntansi/pdf_jurnal_penyesuaian" target="_blank">
+			<a href="<?php echo base_url() ?>akuntansi/laporan_akuntansi/pdf_jurnal_umum_all" target="_blank">
 				<div class="btn btn-warning waves-effect my-auto mr-2"><i class="fas fa-print mr-2"></i></i>Cetak Semua</div>
             </a>
           </div>
@@ -159,36 +123,3 @@
     </div>
   </div>
 </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript">
-    $(".remove").click(function() {
-        var id = $(this).parents("tr").attr("id");
-        swal({
-            title: "Hapus Data?",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        }).then((willDelete) => {
-            if (willDelete) {
-                $.ajax({
-                    url: '<?= base_url() ?>akuntansi/jurnal_penyesuaian/delete_jurnal_penyesuaian/' + id,
-                    type: 'DELETE',
-                    error: function() {
-                        alert('Something is wrong');
-                    },
-                    success: function(data) {
-                        swal({
-                            title: "Data Telah Terhapus"
-                        }).then(function() {
-                            location.reload();
-                        });
-                    }
-                });
-            } else {
-                // swal("Batal");
-            }
-        });
-    });
-</script>
-

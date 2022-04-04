@@ -27,7 +27,7 @@ private $widths;
 	  $nb=0;
 	  for($i=0;$i<count($data);$i++)
 		  $nb=max($nb,$this->NbLines($this->widths[$i],$data[$i]));
-	  $h=10*$nb;
+	  $h=7*$nb;
 	  //Issue a page break first if needed
 	  $this->CheckPageBreak($h);
 	  //Draw the cells of the row
@@ -41,7 +41,7 @@ private $widths;
 		  //Draw the border
 		  $this->Rect($x,$y,$w,$h);
 		  //Print the text
-		  $this->MultiCell($w,10,$data[$i],0,$a);
+		  $this->MultiCell($w,7,$data[$i],0,$a);
 		  //Put the position to the right of the cell
 		  $this->SetXY($x+$w,$y);
 	  }
@@ -146,7 +146,7 @@ private $widths;
 	  //header
 	  
 	  $this->Ln(3);
-	  $h = 13;
+	  $h = 9;
 	  $left = 40;
 	  $top = 80;
 	  #tableheader

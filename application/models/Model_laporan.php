@@ -113,4 +113,15 @@ class Model_laporan extends CI_Model
 		// $this->db->group_by("idJenis");
 		return $this->db->get();
 	}
+
+	public function update_data($tabel, $data,$id,$rowid)
+    {
+        $this->db->where($rowid, $id);
+        return $this->db->update($tabel, $data);
+    }
+
+	public function insert_data($tabel, $data)
+    {
+        return $this->db->insert($tabel, $data);
+    }
 }

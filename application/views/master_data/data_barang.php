@@ -10,7 +10,7 @@
                             Data Barang
                         </h4>
                         <div class="d-flex">
-							<a href="<?= base_url() ?>cetak_pdf/pdfdata_barang">
+							<a href="<?= base_url() ?>cetak_pdf/pdfdata_barang" target="_blank">
 								<div class="btn btn-warning mr-2"><i class="fas fa-print mr-2"></i></i>Cetak PDF</div>
                             </a>
                             <a href="<?= base_url() ?>master_data/tambah_barang">

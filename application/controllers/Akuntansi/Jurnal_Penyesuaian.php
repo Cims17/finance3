@@ -39,7 +39,7 @@ class Jurnal_Penyesuaian extends CI_Controller
 
 			$this->load->view('template/header');
 			$this->load->view('template/sidebar');
-			$this->load->view('akuntansi/jurnal_penyelesaian', $data);
+			$this->load->view('akuntansi/jurnal_penyesuaian_clear', $data);
 			$this->load->view('template/footer');
 		}
 	}
@@ -192,9 +192,10 @@ class Jurnal_Penyesuaian extends CI_Controller
 		}
 	}
 
-	// public function delete_jurnal_penyesuaian($id)
-	// {
-	//     // $id = $this->input->post('id');
-	//     $this->db->delete('jenis_akun', array('idJenis' => $id));
-	// }
+	public function delete_jurnal_penyesuaian($idLog)
+	{
+	    $this->db->delete('kredit_log', array('idLog' => $idLog));
+		$this->db->delete('debit_log', array('idLog' => $idLog));
+		$this->db->delete('log_akun', array('idLog' => $idLog));
+	}
 }

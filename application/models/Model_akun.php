@@ -16,7 +16,16 @@ class Model_akun extends CI_Model {
         $this->db->from('akun,jenis_akun');
         $this->db->where('akun.idJenis = jenis_akun.idJenis');
         $this->db->where('akun.saldoAwal != 0');
+		$this->db->join('saldo_awal_log', 'akun.idAkun=saldo_awal_log.idAkun');
         // $this->db->join('saldo', 'akun.idAkun=saldo.idAkun');
+
+        return $this->db->get();
+    }
+
+	public function get_saldo_awal_log(){
+        $this->db->select('idLog, idAkun');
+        $this->db->from('log_akun');
+        $this->db->where('log_akun.input_from', 'Saldo Awal');
 
         return $this->db->get();
     }
@@ -64,6 +73,7 @@ class Model_akun extends CI_Model {
         $this->db->from('saldo_awal_log, akun,jenis_akun');
         $this->db->where('akun.idJenis = jenis_akun.idJenis');
         $this->db->where('saldo_awal_log.idAkun = akun.idAkun');
+		$this->db->join('saldo_awal_log', 'akun.idAkun=saldo_awal_log.idAkun');
         $this->db->where('saldo_awal_log.tanggal <=', $selesai);
         $this->db->where('saldo_awal_log.tanggal >=', $mulai);
 

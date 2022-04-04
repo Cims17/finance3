@@ -38,7 +38,7 @@ class Jurnal_Umum extends CI_Controller
 
 			$this->load->view('template/header');
 			$this->load->view('template/sidebar');
-			$this->load->view('akuntansi/jurnal_umum', $data);
+			$this->load->view('akuntansi/jurnal_umum_clear', $data);
 			$this->load->view('template/footer');
 		}
 	}
@@ -98,6 +98,7 @@ class Jurnal_Umum extends CI_Controller
 			}
 		}
 	}
+
 	public function edit_jurnal_umum($idLog)
 	{
 		$data['akun'] = $this->Model_akun->get_akun()->result_array();
@@ -191,7 +192,10 @@ class Jurnal_Umum extends CI_Controller
 		}
 	}
 
-	public function delete_jurnal_umum($id)
+	public function delete_jurnal_umum($idLog)
 	{
+		$this->db->delete('kredit_log', array('idLog' => $idLog));
+		$this->db->delete('debit_log', array('idLog' => $idLog));
+		$this->db->delete('log_akun', array('idLog' => $idLog));
 	}
 }

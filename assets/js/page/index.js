@@ -292,11 +292,11 @@ function chart4() {
             colors: ['#999b9c', '#4CC2B0'] // marker color
         },
         series: [{
-            name: 'series1',
+            name: 'Pembelian',
             data: [31, 40, 28, 51, 22, 64, 80]
         }, {
-            name: 'series2',
-            data: [11, 32, 67, 32, 44, 52, 41]
+            name: 'Penjualan',
+            data: [50, 32, 67, 32, 44, 52, 41]
         }],
         legend: {
             show: false,

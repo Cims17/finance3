@@ -87,7 +87,7 @@
 														Edit
 													</div>
 												</a>
-												<div class="btn btn-danger d-flex align-items-center">
+												<div class="btn btn-danger d-flex align-items-center remove">
 													<i class="far fa-trash-alt mr-2"></i>
 													Hapus
 												</div>
@@ -159,3 +159,36 @@
     </div>
   </div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(".remove").click(function() {
+        var id = $(this).parents("tr").attr("id");
+        swal({
+            title: "Hapus Data?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: '<?= base_url() ?>akuntansi/jurnal_umum/delete_jurnal_umum/' + id,
+                    type: 'DELETE',
+                    error: function() {
+                        alert('Something is wrong');
+                    },
+                    success: function(data) {
+                        swal({
+                            title: "Data Telah Terhapus"
+                        }).then(function() {
+                            location.reload();
+                        });
+                    }
+                });
+            } else {
+                // swal("Batal");
+            }
+        });
+    });
+</script>
+

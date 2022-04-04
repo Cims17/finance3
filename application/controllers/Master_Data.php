@@ -21,6 +21,7 @@ class Master_Data extends CI_Controller
 		$selesai = $this->input->post('selesai');
 		if ($mulai) {
 			$data['akun'] = $this->Model_akun->get_akun_filter($selesai, $mulai)->result_array();
+			$data['log1'] = $this->Model_akun->get_saldo_awal_log()->result_array();
 			$data['tgl'] = array(
 				'mulai'      => $mulai,
 				'selesai'       => $selesai
@@ -33,6 +34,7 @@ class Master_Data extends CI_Controller
 		} else {
 
 			$data['akun'] = $this->Model_akun->get_akun_saldo()->result_array();
+			$data['log1'] = $this->Model_akun->get_saldo_awal_log()->result_array();
 			$data['tgl'] = array(
 				'mulai'      => '0000-00-00',
 				'selesai'       => '0000-00-00'
@@ -83,13 +85,14 @@ class Master_Data extends CI_Controller
 			if ($save) {
 				$data2 = array(
 					'idAkun'        => $idAkun,
-					'kredit'       => $nominal,
+					'kredit'       => $saldoAwal,
 					'idLog'       => $this->db->insert_id(),
 				);
 				$this->Model_akuntansi->insert_data('kredit_log', $data2);
 				$data = array(
-					'idAkun'        => $idAkun,
-					'saldoAwal'       => $saldoAwal,
+					'idAkun'	=> $idAkun,
+					'saldoAwal'	=> $saldoAwal,
+					'tipe_awal'	=> $jenisSaldo	
 				);
 
 				$this->Model_akuntansi->insert_data('saldo_awal_log', $data);
@@ -114,6 +117,7 @@ class Master_Data extends CI_Controller
 				$data = array(
 					'idAkun'        => $idAkun,
 					'saldoAwal'       => $saldoAwal,
+					'tipe_awal'	=> $jenisSaldo	
 				);
 
 				$this->Model_akuntansi->insert_data('saldo_awal_log', $data);
@@ -158,6 +162,85 @@ class Master_Data extends CI_Controller
 		// 		redirect('master_data/saldo_awal');
 		// 	}
 		// }
+	}
+
+	public function edit_saldo($id)
+	{
+		$saldoAwal = $this->input->post('saldoAwal');
+		$tipe_saldo = $this->input->post('tipe_saldo');
+		$saldoLawas = $this->input->post('saldoLawas');
+		
+		$idLog = $this->input->post('idLog');
+		if ($saldoLawas != $tipe_saldo) {
+            if ($tipe_saldo == "Kredit") {
+                $this->db->delete('debit_log', array('idLog' => $idLog));
+                $data3 = array(
+                    'kredit'       => $saldoAwal,
+                    'debit'     => 0
+                );
+                $save = $this->Model_laporan->update_data('log_akun', $data3, $idLog, 'idLog');
+                if ($save) {
+                    $data = array(
+                        'idAkun'        => $id,
+                        'kredit'       => $saldoAwal,
+                        'idLog'       => $idLog,
+                    );
+                    $this->Model_laporan->insert_data('kredit_log', $data);
+                }
+            } else {
+                $this->db->delete('kredit_log', array('idLog' => $idLog));
+                $data3 = array(
+                    'debit'       => $saldoAwal,
+                    'kredit'     => 0
+                );
+                $save = $this->Model_laporan->update_data('log_akun', $data3, $idLog, 'idLog');
+                
+                if ($save) {
+                    $data = array(
+                        'idAkun'        => $id,
+                        'debit'       => $saldoAwal,
+                        'idLog'       => $idLog,
+                    );
+                    $this->Model_laporan->insert_data('debit_log', $data);
+                }
+            }
+        }else{
+            if ($tipe_saldo == "Kredit") {
+                $data3 = array(
+                    'kredit'       => $saldoAwal,
+                    
+                );
+                $save = $this->Model_laporan->update_data('log_akun', $data3, $id, 'idLog');
+                if ($save) {
+                    $data = array(
+                        'kredit'       => $saldoAwal,
+                    );
+                    $this->Model_laporan->update_data('kredit_log', $data, $idLog, 'idLog');
+                }
+            } else {
+                $data3 = array(
+                    'debit'       => $saldoAwal,
+                );
+                $save = $this->Model_laporan->update_data('log_akun', $data3, $idLog, 'idLog');
+                
+                if ($save) {
+                    $data = array(
+                        'idAkun'        => $id,
+                        'debit'       => $saldoAwal,
+                        'idLog'       => $idLog,
+                    );
+                    $this->Model_laporan->update_data('debit_log', $data, $idLog, 'idLog');
+                }
+            }
+        }
+		$data4 = array(
+			'saldoAwal'    => $saldoAwal,
+			'tipe_awal'       => $tipe_saldo
+		);
+		$save = $this->Model_laporan->update_data('saldo_awal_log', $data4, $id, 'idAkun');
+		if ($save) {
+			redirect('master_data/saldo_awal');
+		}
 	}
 
 	//DATA PERUSAHAAN
@@ -291,6 +374,7 @@ class Master_Data extends CI_Controller
 		$this->load->view('master_data/data_perkiraan', $data);
 		$this->load->view('template/footer');
 	}
+
 
 	public function jenis_akun()
 	{
@@ -431,6 +515,10 @@ class Master_Data extends CI_Controller
 	public function delete_akun($id)
 	{
 		// $id = $this->input->post('id');
+		$this->db->delete('kredit_log', array('idAkun' => $id));
+		$this->db->delete('debit_log', array('idAkun' => $id));
+		$this->db->delete('saldo_awal_log', array('idAkun' => $id));
+		$this->db->delete('log_akun', array('idAkun' => $id));
 		$this->db->delete('akun', array('idAkun' => $id));
 	}
 

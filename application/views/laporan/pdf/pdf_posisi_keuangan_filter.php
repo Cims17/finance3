@@ -181,16 +181,6 @@ class RPDF extends FPDF
 
 
 		$no = 0;
-		foreach ($jumlah_penjualan as $jml_pjl) {
-			$this->SetFont('Arial', '', 11);
-			$this->SetFillColor(255, 255, 255);
-			$this->SetX(25);
-			$this->Cell(30, 6, 'Pendapatan', 0, 0, 'L');
-			$this->Cell(80, 6, '', 0, 0, 'L');
-			$this->Cell(50, 6, "Rp. " . number_format($jml_pjl['totalPenjualan']), 0, 1, 'R');
-			$this->SetFont('Arial', '', 10);
-			$this->Ln(1);
-		}
 
 		$this->Ln(3);
 	}
@@ -214,6 +204,6 @@ error_reporting(0);
 $this->myfpdf = new RPDF();
 $this->myfpdf->AliasNbPages();
 $this->myfpdf->AddPage();
-$this->myfpdf->SetTitle('LAPORAN LABA RUGI TOKO ANITA', true);
+$this->myfpdf->SetTitle('LAPORAN POSISI KEUANGAN TOKO ANITA', true);
 $this->myfpdf->Content($jenis, $akun, $total_jenis, $total_aset, $total_liabilitas_ekuitas, $tgl);
-$this->myfpdf->Output('laporan-laba-rugi [' . date("d-M-Y",  strtotime($tgl['mulai'])) . ' s/d ' . date("d-M-Y",  strtotime($tgl['selesai'])) . '].pdf', 'I');
+$this->myfpdf->Output('laporan-posisi-keuangan [' . date("d-M-Y",  strtotime($tgl['mulai'])) . ' s/d ' . date("d-M-Y",  strtotime($tgl['selesai'])) . '].pdf', 'I');
