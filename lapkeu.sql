@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 02 Apr 2022 pada 01.26
--- Versi server: 10.4.24-MariaDB
--- Versi PHP: 7.4.28
+-- Waktu pembuatan: 04 Apr 2022 pada 21.02
+-- Versi server: 10.4.20-MariaDB
+-- Versi PHP: 7.4.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `rahma`
+-- Database: `lapkeu`
 --
 
 -- --------------------------------------------------------
@@ -46,12 +46,11 @@ CREATE TABLE `akun` (
 --
 
 INSERT INTO `akun` (`idAkun`, `kodeAkun`, `idJenis`, `namaAkun`, `keterangan`, `saldoAwal`, `kredit`, `debit`, `saldoAkhir`, `created_at`, `updated_at`) VALUES
-(16, '1', 1, 'Fadelmi', 'belanja', 300000, 50000, 0, 250000, '2022-01-26', '2022-01-26'),
-(17, '2', 12, 'Ervany', 'Coba', 100000, 60000, 100000, 140000, '2022-03-03', '2022-03-03'),
-(22, '1101', 1, 'Kas', 'Kas kecil', 100000, 0, 10000, 110000, '2022-03-10', '2022-03-10'),
-(23, '2', 10, 'Coba Aset Tetap', 'djksd', 0, 0, 0, 0, '2022-03-31', '2022-03-31'),
-(24, '12', 13, 'Coba ekuitas', '', 0, 0, 0, 0, '2022-03-31', '2022-03-31'),
-(26, '310-2', 13, 'Coba kode jenis', '', 0, 0, 0, 0, '2022-04-01', '2022-04-01');
+(50, '110-12', 1, 'Coba nihhh', '', 70000000, 70000000, 0, 0, '2022-04-05', '2022-04-05'),
+(51, '310-12', 13, 'ekuitas', '', 700000000, 0, 700000000, 0, '2022-04-05', '2022-04-05'),
+(52, '220-12', 12, 'liabi', '', 300000000, 0, 300000000, 0, '2022-04-05', '2022-04-05'),
+(53, '120-30', 14, 'Coba nihhh', '', 300000, 0, 300000, 0, '2022-04-05', '2022-04-05'),
+(54, '51-12', 16, 'HPP', '', 300000, 0, 300000, 0, '2022-04-05', '2022-04-05');
 
 -- --------------------------------------------------------
 
@@ -84,7 +83,11 @@ INSERT INTO `barang` (`idBarang`, `kodeBarang`, `nama`, `idJenis`, `keterangan`,
 (11, '4', 'Aqua + Galon (19 liter)', 1, '', 50000, 100, '2022-02-21'),
 (12, '5', 'Aqua (19 liter)', 1, '', 17000, 199, '2022-02-21'),
 (13, '6', 'Cleo + Galon (19 liter)', 1, '', 46000, 100, '2022-02-21'),
-(14, '7', 'Cleo (19 Liter)', 1, '', 17000, 97, '2022-02-21');
+(14, '7', 'Cleo (19 Liter)', 1, '', 17000, 97, '2022-02-21'),
+(21, 'DJOK32', 'coba kode', 1, '', 1000, 40, '2022-04-04'),
+(22, '2323', 'Gelas kaca', 2, '', 10000, 10, '2022-04-04'),
+(23, 'okok', 'Milo', 2, '', 7000, 10, '2022-04-05'),
+(24, 'Aq1223', 'Aqua Kardus ', 2, '', 5000, 10, '2022-04-05');
 
 -- --------------------------------------------------------
 
@@ -105,8 +108,10 @@ CREATE TABLE `debit_log` (
 --
 
 INSERT INTO `debit_log` (`id`, `idAkun`, `idLog`, `debit`, `tanggal`) VALUES
-(11, 17, 55, 100000, '2022-03-03'),
-(12, 22, 65, 10000, '2022-03-31');
+(57, 51, 110, 700000000, '2022-04-05'),
+(58, 52, 111, 300000000, '2022-04-05'),
+(59, 53, 112, 300000, '2022-04-05'),
+(60, 54, 113, 300000, '2022-04-05');
 
 --
 -- Trigger `debit_log`
@@ -156,7 +161,8 @@ INSERT INTO `jenis_akun` (`idJenis`, `namaJenis`, `kodeJenis`, `id_tipeAkun`, `t
 (10, 'Aset Tetap', 120, 3, '2022-03-09'),
 (12, 'Liabilitas Jangka Pendek', 220, 4, '2022-03-09'),
 (13, 'Ekuitas', 310, 4, '2022-03-09'),
-(14, 'Pembelian', 120, 2, '2022-03-30');
+(14, 'Pembelian', 120, 2, '2022-03-30'),
+(16, 'HPPcoba', 51, 5, '2022-04-04');
 
 -- --------------------------------------------------------
 
@@ -197,13 +203,7 @@ CREATE TABLE `kredit_log` (
 --
 
 INSERT INTO `kredit_log` (`id`, `idAkun`, `idLog`, `kredit`, `tanggal`) VALUES
-(12, 16, 46, 15000, '2022-01-26'),
-(15, 16, 47, 10000, '2022-01-26'),
-(16, 16, 53, 20000, '2022-03-03'),
-(17, 17, 54, 10000, '2022-03-03'),
-(18, 16, 56, 5000, '2022-03-03'),
-(19, 17, 57, 40000, '2022-03-03'),
-(20, 17, 64, 10000, '2022-03-31');
+(49, 50, 109, 70000000, '2022-04-05');
 
 --
 -- Trigger `kredit_log`
@@ -252,24 +252,11 @@ CREATE TABLE `log_akun` (
 --
 
 INSERT INTO `log_akun` (`idLog`, `idAkun`, `saldoAwal`, `kredit`, `debit`, `keterangan`, `input_from`, `tanggal`) VALUES
-(42, 16, 2000000, 0, 0, 'Saldo Awal', 'Saldo Awal', '2022-01-26'),
-(44, 16, 1000000, 0, 0, '', 'Saldo Awal', '2022-01-26'),
-(46, 16, 0, 15000, 0, 'hehe', 'Jurnal Umum', '2022-01-26'),
-(47, 16, 0, 10000, 0, 'makan', 'Jurnal Penyesuaian', '2022-01-26'),
-(48, 16, 30000, 0, 0, 'Coba Nabung', 'Saldo Awal', '2022-02-06'),
-(49, 16, 30000, 0, 0, 'Coba Nabung2', 'Saldo Awal', '2022-02-06'),
-(50, 16, 30000, 0, 0, '', 'Saldo Awal', '2022-02-08'),
-(51, 16, 50000, 0, 0, '', 'Saldo Awal', '2022-02-08'),
-(52, 17, 100000, 0, 0, 'coba tambah saldo', 'Saldo Awal', '2022-03-03'),
-(53, 16, 0, 20000, 0, 'coba tambah kredit', 'Jurnal Umum', '2022-03-03'),
-(54, 17, 0, 10000, 0, 'coba tambah kredit', 'Jurnal Umum', '2022-03-03'),
-(55, 17, 0, 0, 100000, 'coba tambah debit', 'Jurnal Umum', '2022-03-03'),
-(56, 16, 0, 5000, 0, 'Minum', 'Jurnal Penyesuaian', '2022-03-03'),
-(57, 17, 0, 40000, 0, 'Makan', 'Jurnal Penyesuaian', '2022-03-03'),
-(58, 16, 300000, 0, 0, 'namba saldooo', 'Saldo Awal', '2022-03-08'),
-(63, 22, 100000, 0, 0, 'modal', 'Saldo Awal', '2022-03-10'),
-(64, 17, 0, 10000, 0, '', 'Jurnal Umum', '2022-03-31'),
-(65, 22, 0, 0, 10000, '', 'Jurnal Penyesuaian', '2022-03-31');
+(109, 50, 0, 70000000, 0, '', 'Saldo Awal', '2022-04-05'),
+(110, 51, 0, 0, 700000000, '', 'Saldo Awal', '2022-04-05'),
+(111, 52, 0, 0, 300000000, '', 'Saldo Awal', '2022-04-05'),
+(112, 53, 0, 0, 300000, '', 'Saldo Awal', '2022-04-05'),
+(113, 54, 0, 0, 300000, '', 'Saldo Awal', '2022-04-05');
 
 -- --------------------------------------------------------
 
@@ -320,7 +307,8 @@ INSERT INTO `pembelian` (`idPembelian`, `noTransaksi`, `tanggal`, `idSupp`, `ket
 (37, 'B20220310036', '2022-02-01', 2, ' coba trigger tambah barang nih bosss', 100000, '', '2022-03-09 21:33:27'),
 (38, 'B20220310037', '2022-03-10', 2, ' Coba lagi', 150000, '', '2022-03-09 19:52:52'),
 (39, 'B20220310038', '2022-03-10', 2, ' ', 20000, '', '2022-03-10 07:08:13'),
-(40, 'B20220310039', '2022-03-10', 4, ' ', 25000, '', '2022-03-10 07:11:10');
+(40, 'B20220310039', '2022-03-10', 4, ' ', 25000, '', '2022-03-10 07:11:10'),
+(41, 'B20220405040', '2022-04-05', 2, ' Coba lagiii ', 40000, '', '2022-04-04 17:26:29');
 
 -- --------------------------------------------------------
 
@@ -348,7 +336,8 @@ INSERT INTO `pembelian_detail` (`id_pembelianDetail`, `idPembelian`, `namaBarang
 (32, 38, 'Aqua (19 liter)', 100, 1000, 100000),
 (33, 38, 'Cleo', 50, 1000, 50000),
 (34, 39, 'Aqua', 2, 10000, 20000),
-(35, 40, 'Le mineral (15 liter)', 5, 5000, 25000);
+(35, 40, 'Le mineral (15 liter)', 5, 5000, 25000),
+(36, 41, 'Aqua Kardus ', 10, 4000, 40000);
 
 --
 -- Trigger `pembelian_detail`
@@ -454,8 +443,7 @@ CREATE TABLE `perusahaan` (
 INSERT INTO `perusahaan` (`id`, `nama`, `alamat`, `npwp`, `tanggal`) VALUES
 (1, 'ADAM JAYA', 'Dusun Krajan, Desa Kradinan, Kecamatan Dolopo', '1023998043471901233212', '2021-11-01'),
 (3, 'Adi Putra', 'Desa Kradinan Kecamatan Dolopo Kabupaten Madiun', '12418939082101823443', '2021-09-17'),
-(5, 'VanSyah Studio', 'Dusun Krajan, Desa Kradinan, Kecamatan Dolopo', '10239980434719038028390', '2022-03-09'),
-(8, 'Ervany Septa Prawara Arisanto', 'Dusun Krajan, Desa Kradinan, Kecamatan Dolopo', '102399804347190123321', '2022-03-10');
+(5, 'VanSyah Studio', 'Dusun Krajan, Desa Kradinan, Kecamatan Dolopo', '10239980434719038028390', '2022-03-09');
 
 -- --------------------------------------------------------
 
@@ -467,6 +455,7 @@ CREATE TABLE `saldo_awal_log` (
   `id` int(11) NOT NULL,
   `idAkun` int(11) NOT NULL,
   `saldoAwal` int(11) NOT NULL,
+  `tipe_awal` varchar(20) NOT NULL,
   `tanggal` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -474,10 +463,12 @@ CREATE TABLE `saldo_awal_log` (
 -- Dumping data untuk tabel `saldo_awal_log`
 --
 
-INSERT INTO `saldo_awal_log` (`id`, `idAkun`, `saldoAwal`, `tanggal`) VALUES
-(4, 16, 300000, '2022-01-26'),
-(6, 17, 100000, '2022-03-03'),
-(9, 22, 100000, '2022-03-10');
+INSERT INTO `saldo_awal_log` (`id`, `idAkun`, `saldoAwal`, `tipe_awal`, `tanggal`) VALUES
+(37, 50, 70000000, 'Kredit', '2022-04-05'),
+(38, 51, 700000000, 'Debit', '2022-04-05'),
+(39, 52, 300000000, 'Debit', '2022-04-05'),
+(40, 53, 300000, 'Debit', '2022-04-05'),
+(41, 54, 300000, 'Debit', '2022-04-05');
 
 --
 -- Trigger `saldo_awal_log`
@@ -537,7 +528,8 @@ INSERT INTO `tipe_akun` (`id_tipeAkun`, `nama_tipeAkun`) VALUES
 (1, 'Pendapatan'),
 (2, 'Beban'),
 (3, 'Aset'),
-(4, 'Liabilitas dan Ekuitas');
+(4, 'Liabilitas dan Ekuitas'),
+(5, 'HPP');
 
 -- --------------------------------------------------------
 
@@ -560,7 +552,8 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`idUser`, `username`, `email`, `password`, `role`) VALUES
 (1, 'fadel', 'fadelirsyad10@gmail.com', '$2y$10$5w5L4nAQKMJEAmc65lJdBeHyCExzfOA5CHVps2NWhwVq/ZsyGw71.', 1),
 (2, 'Ervany Septa Prawara Arisanto', 'ervany@gmail.com', '$2y$10$vSEF3ViA/F1DRrgDHAEjXuI8VjopSrxMPid/mrq0N/w7klcuzs1La', 1),
-(3, 'septa', 'septa@gmail.com', '$2y$10$TPsxXE6CxzNM89fjMJGxVuAUFDWD64fSKV1ghDa1zmdvb.Re0Ylmy', 77);
+(3, 'septa', 'septa@gmail.com', '$2y$10$TPsxXE6CxzNM89fjMJGxVuAUFDWD64fSKV1ghDa1zmdvb.Re0Ylmy', 77),
+(4, 'meongbanget', 'meong@gmail.com', '$2y$10$Y63JgCxMOGGoCy3j2R7uvOJ.dVqzOHIWsSBUy7ENlSx1E/0c0P0iO', 1);
 
 --
 -- Indexes for dumped tables
@@ -690,25 +683,25 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `akun`
 --
 ALTER TABLE `akun`
-  MODIFY `idAkun` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `idAkun` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT untuk tabel `barang`
 --
 ALTER TABLE `barang`
-  MODIFY `idBarang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `idBarang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT untuk tabel `debit_log`
 --
 ALTER TABLE `debit_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT untuk tabel `jenis_akun`
 --
 ALTER TABLE `jenis_akun`
-  MODIFY `idJenis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `idJenis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT untuk tabel `jenis_barang`
@@ -720,13 +713,13 @@ ALTER TABLE `jenis_barang`
 -- AUTO_INCREMENT untuk tabel `kredit_log`
 --
 ALTER TABLE `kredit_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT untuk tabel `log_akun`
 --
 ALTER TABLE `log_akun`
-  MODIFY `idLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `idLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
 
 --
 -- AUTO_INCREMENT untuk tabel `pelanggan`
@@ -738,13 +731,13 @@ ALTER TABLE `pelanggan`
 -- AUTO_INCREMENT untuk tabel `pembelian`
 --
 ALTER TABLE `pembelian`
-  MODIFY `idPembelian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `idPembelian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT untuk tabel `pembelian_detail`
 --
 ALTER TABLE `pembelian_detail`
-  MODIFY `id_pembelianDetail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id_pembelianDetail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT untuk tabel `penjualan`
@@ -768,7 +761,7 @@ ALTER TABLE `perusahaan`
 -- AUTO_INCREMENT untuk tabel `saldo_awal_log`
 --
 ALTER TABLE `saldo_awal_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT untuk tabel `supplier`
@@ -780,7 +773,7 @@ ALTER TABLE `supplier`
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
