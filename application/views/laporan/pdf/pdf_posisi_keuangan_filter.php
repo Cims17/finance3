@@ -71,9 +71,8 @@ class RPDF extends FPDF
 						$this->SetFont('Arial', '', 11);
 						$this->SetFillColor(255, 255, 255);
 						$this->SetX(15);
-						$this->Cell(25, 6, $ak['kodeAkun'], 0, 0, 'L');
-						$this->Cell(60, 6, $ak['namaAkun'], 0, 0, 'L');
-						$this->Cell(60, 6, "Rp. " . number_format($ak['debit'] - $ak['kredit']), 0, 1, 'R');
+						$this->Cell(70, 6, $ak['namaAkun'], 0, 0, 'L');
+						$this->Cell(75, 6, "Rp. " . number_format($ak['debit'] - $ak['kredit']), 0, 1, 'R');
 						$this->SetFont('Arial', '', 10);
 						$this->Ln(1);
 					}
@@ -138,9 +137,8 @@ class RPDF extends FPDF
 						$this->SetFont('Arial', '', 11);
 						$this->SetFillColor(255, 255, 255);
 						$this->SetX(15);
-						$this->Cell(25, 6, $ak['kodeAkun'], 0, 0, 'L');
-						$this->Cell(60, 6, $ak['namaAkun'], 0, 0, 'L');
-						$this->Cell(60, 6, "Rp. " . number_format($ak['debit'] - $ak['kredit']), 0, 1, 'R');
+						$this->Cell(70, 6, $ak['namaAkun'], 0, 0, 'L');
+						$this->Cell(75, 6, "Rp. " . number_format($ak['debit'] - $ak['kredit']), 0, 1, 'R');
 						$this->SetFont('Arial', '', 10);
 						$this->Ln(1);
 					}
