@@ -150,13 +150,23 @@ $("#hasilcari").on('click','.add-to-cart',function (event) {
 
 // Add item
 $(".add-to-cart").click(function (event) {
-	event.preventDefault();
-	var name = $(this).data("name");
-	var id = $(this).data("id");
-	// console.log(id);
-	var price = Number($(this).data("price"));
-	shoppingCart.addItemToCart(name, price, 1,id);
-	displayCart();
+	let stok = $('#stok'+$(this).data("id")).val();
+	let kuantitas = parseInt($('#kuantitas'+$(this).data("id")).val());
+
+	if(kuantitas !== 'undefined'){
+		if(stok <= kuantitas){
+			swal('Gagal','Stok tidak mencukupi','error');
+		}else{
+			event.preventDefault();
+			var name = $(this).data("name");
+			var id = $(this).data("id");
+			// console.log(id);
+			var price = Number($(this).data("price"));
+			shoppingCart.addItemToCart(name, price, 1,id);
+			displayCart();
+	}
+}
+
 });
 
 // Clear items
@@ -177,11 +187,11 @@ function displayCart() {
 			cartArray[i].name.replace(/\_/g, ' ') +
 			"' readonly></div><div class='col-3 my-auto text-center'><div class='d-flex justify-content-start pl-0 ml-0'><button type='button' class='minus-item bg-white text-dark m-0 p-0' style='border:none' data-name=" +
 			cartArray[i].name +
-			">-</button><input type='text' class='item-count mx-2' name='kuantitas[" + ac++ + "]' style='width:50px;text-align: center;border:solid 1px #e4e6fc'  data-name='" +
+			">-</button><input type='number' id='kuantitas"+ cartArray[i].idProduk +"' max='3' min='1' class='item-count mx-2' name='kuantitas[" + ac++ + "]' style='width:50px;text-align: center;border:solid 1px #e4e6fc' data-id='"+ cartArray[i].idProduk +"'  data-name='" +
 			cartArray[i].name +
 			"' value='" +
 			cartArray[i].count +
-			"'><button type='button' class='plus-item bg-white text-dark p-0 m-0' style='border:none'  data-name=" +
+			"'><button type='button' class='plus-item bg-white text-dark p-0 m-0' style='border:none' data-id='"+ cartArray[i].idProduk +"'  data-name=" +
 			cartArray[i].name +
 			">+</button></div></div><div class='col-4 my-auto'><input type='text' name='total[" + ad++ + "]' style='width:max-content;border:0;background:white' value='Rp. " +
 			cartArray[i].total +
@@ -212,17 +222,39 @@ $(".show-cart").on("click", ".minus-item", function (event) {
 });
 // +1
 $(".show-cart").on("click", ".plus-item", function (event) {
-	var name = $(this).data("name");
-	shoppingCart.addItemToCart(name);
-	displayCart();
+	let stok = $('#stok'+$(this).data("id")).val();
+	let kuantitas = parseInt($('#kuantitas'+$(this).data("id")).val());
+	if(stok <= kuantitas){
+		swal('Gagal','Stok tidak mencukupi','error');
+	}else{
+		var name = $(this).data("name");
+		shoppingCart.addItemToCart(name);
+		displayCart();
+	}
 });
 
 // Item count input
 $(".show-cart").on("change", ".item-count", function (event) {
-	var name = $(this).data("name");
-	var count = Number($(this).val());
-	shoppingCart.setCountForItem(name, count);
-	displayCart();
+	let stok = $('#stok'+$(this).data("id")).val();
+	let kuantitas = parseInt($('#kuantitas'+$(this).data("id")).val());
+	if(stok < kuantitas){
+		swal('Gagal','Stok tidak mencukupi','error');
+		$('#kuantitas'+$(this).data("id")).val(stok);
+		var name = $(this).data("name");
+		var count = Number($(this).val());
+		shoppingCart.setCountForItem(name, count);
+		displayCart();	
+	}else{
+		var name = $(this).data("name");
+		var count = Number($(this).val());
+		shoppingCart.setCountForItem(name, count);
+		displayCart();
+	}
+
+	// var name = $(this).data("name");
+	// var count = Number($(this).val());
+	// shoppingCart.setCountForItem(name, count);
+	// displayCart();
 });
 
 function lanjut_bayar() {
@@ -241,8 +273,16 @@ function lanjut_bayar() {
 			if (uang < total) {
 				swal("Informasi", "Nominal uang pembayaran kurang", "info");
 			}else{
-				document.getElementById('total_belanja').value = total;
-				document.getElementById('kembalian').value = kembalian;
+				const format = total.toString().split('').reverse().join('');
+				const convert = format.match(/\d{1,3}/g);
+				const rupiah = convert.join('.').split('').reverse().join('')
+
+				const format2 = kembalian.toString().split('').reverse().join('');
+				const convert2 = format2.match(/\d{1,3}/g);
+				const rupiah2 = convert2.join('.').split('').reverse().join('')
+
+				document.getElementById('total_belanja').value = rupiah;
+				document.getElementById('kembalian').value = rupiah2;
 
 				$('#modal_kembalian').appendTo("body").modal('show');
 			}

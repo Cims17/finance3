@@ -7,6 +7,7 @@ class Model_transaksi extends CI_Model {
 		$this->db->select('*');
         $this->db->from('penjualan');
         $this->db->join('pelanggan', 'penjualan.idPelanggan=pelanggan.idPelanggan');
+		$this->db->order_by('tanggal', 'ASC');
 
         return $this->db->get();
 	}
@@ -17,6 +18,7 @@ class Model_transaksi extends CI_Model {
 		$this->db->join('pelanggan', 'penjualan.idPelanggan=pelanggan.idPelanggan');
         $this->db->where('tanggal <=', $selesai);
         $this->db->where('tanggal >=', $mulai);
+		$this->db->order_by('tanggal', 'ASC');
         return $this->db->get();
     }
 
@@ -46,6 +48,7 @@ class Model_transaksi extends CI_Model {
 		$this->db->select('*');
         $this->db->from('pembelian');
         $this->db->join('supplier', 'supplier.idSupp=pembelian.idSupp');
+		$this->db->order_by('tanggal', 'ASC');
 
         return $this->db->get();
 	}

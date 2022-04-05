@@ -40,6 +40,8 @@
                                                                 </div>
                                                                 <div class="card-body">
                                                                     <h6 class="text-dark font-15">Rp. <?= number_format($brg['harga'], 0, '', '.') ?></h6>
+																	<h6 class="font-weight-normal mt-2 mb-0 font-14 text-dark">Stok <?= $brg['stok'] ?> pcs</h6>
+                                                        			<input hidden type="text" id="stok<?= $brg['idBarang'] ?>" value="<?= $brg['stok'] ?>">
                                                                 </div>
                                                             </a>
                                                         </div>
@@ -105,7 +107,8 @@
                                                     Rp
                                                 </div>
                                             </div>
-                                            <input type="text" class="form-control " id="total-cart" name="total_belanja" readonly>
+                                            <input type="text" class="form-control " id="total-belanja" readonly>
+											<input hidden type="text" class="form-control " id="total-cart" name="total_belanja" readonly>
                                         </div>
                                     </div>
 
@@ -117,7 +120,8 @@
                                                     Rp
                                                 </div>
                                             </div>
-                                            <input type="number" min="0" class="form-control" name="bayar" id="uang">
+                                            <input type="text" min="0" class="form-control" id="bayar_">
+											<input hidden type="text" min="0" class="form-control" name="bayar" id="uang">
                                         </div>
                                     </div>
 
@@ -264,6 +268,77 @@
         xmlhttp.open("GET", "<?= base_url(); ?>index.php/transaksi/caribarang?q=" + str, true);
         xmlhttp.send();
     }
+
+
+	$(document).ready(function() {
+        
+        // total belanja
+        setInterval(function() {
+            var total_cart = document.getElementById('total-cart').value;
+            const format = total_cart.toString().split('').reverse().join('');
+            const convert = format.match(/\d{1,3}/g);
+            const rupiah = convert.join('.').split('').reverse().join('');
+            document.getElementById('total-belanja').value = rupiah;
+        }, 500);
+
+        // // uang pelanggan
+        var uang2 = document.getElementById('bayar_');
+        uang2.addEventListener('keyup', function(e) {
+            uang2.value = formatRupiah(this.value);
+        });
+
+		setInterval(function() {
+            var bayar2= document.getElementById('bayar_').value;
+            const format2 = bayar2.toString().split('').reverse().join('');
+            const convert2 = format2.match(/\d{1,3}/g);
+            const rupiah2 = convert2.join('.').split('').reverse().join('');
+            document.getElementById('uang').value = rupiah2.replace(/[^,\d]/g, '').toString();
+        }, 500);
+
+        /* Fungsi */
+        function formatRupiah(angka, prefix) {
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+        }
+
+        // hitung kembalian
+        setInterval(function() {
+            // get total belanja
+            // let total_belanja = document.getElementById('total-cart').value;
+            // let ttb = total_belanja.replace(/[^,\d]/g, '').toString();
+
+            // get uang pelanggan
+            // let uang_pelanggan = document.getElementById('bayar').value;
+            // let up = uang_pelanggan.replace(/[^,\d]/g, '').toString();
+
+            // fungsi hitung
+            // let hitung = parseInt(up) - parseInt(ttb);
+            // if (uang_pelanggan != '') {
+            //     const format2 = hitung.toString().split('').reverse().join('');
+            //     const convert2 = format2.match(/\d{1,3}/g);
+            //     const hitung2 = convert2.join('.').split('').reverse().join('');
+            //     if (hitung < 0) {
+            //         document.getElementById('kembalian').value = '-' + hitung2;
+            //     } else {
+            //         document.getElementById('kembalian').value = hitung2;
+            //     }
+            // } else {
+            //     document.getElementById('kembalian').value = '0';
+            // }
+
+        }, 500);
+    });
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
