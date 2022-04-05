@@ -94,14 +94,6 @@ class RPDF extends FPDF{
 		$this->SetFont('Arial','',10);
 		$this->Ln(3);
 		$no=0;
-		foreach ($jumlah_pembelian as $jml_pbl);
-			$this->SetFont('Arial', '', 11);
-			$this->SetFillColor(255, 255, 255);
-			$this->SetX(25);
-			$this->Cell(70,6,'Pembelian',0,0,'L');
-			$this->Cell(90,6,"Rp. ". number_format($jml_pbl['totalPembelian']),0,1,'R');
-			$this->SetFont('Arial','',10);
-			$this->Ln(1);
 
 		foreach ($jenis as $jns){
             if ($jns['id_tipeAkun'] == 2) {
@@ -128,7 +120,7 @@ class RPDF extends FPDF{
 		$this->SetFillColor(255, 255, 255);
 		$this->Cell(50,6,'Total Beban',0,0,'L');
 		$this->Cell(70,6,'',0,0,'L');
-		$this->Cell(70,6,"Rp. ". number_format($jml_pbl['totalPembelian'] + $total_beban),0,1,'R');
+		$this->Cell(70,6,"Rp. ". number_format( $total_beban),0,1,'R');
 		$this->SetLineWidth(0.6);
 		$this->Line(10, $this->GetY(), 200, $this->GetY());
 		$this->SetLineWidth(0);
@@ -138,7 +130,7 @@ class RPDF extends FPDF{
 		$this->SetFillColor(255, 255, 255);
 		$this->Cell(50,6,'Laba / Rugi Bersih',0,0,'L');
 		$this->Cell(70,6,'',0,0,'L');
-		$this->Cell(70,6,"Rp. ". number_format(($jml_pjl['totalPenjualan'] - $total_hpp) - ($jml_pbl['totalPembelian'] + $total_beban)),0,1,'R');
+		$this->Cell(70,6,"Rp. ". number_format(($jml_pjl['totalPenjualan'] - $total_hpp) - $total_beban),0,1,'R');
 		$this->SetLineWidth(0.6);
 		$this->Line(10, $this->GetY(), 200, $this->GetY());
 		$this->SetLineWidth(0);
