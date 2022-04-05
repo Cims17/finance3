@@ -46,6 +46,19 @@ input[type=number] {
                                 </div>
 
                             </div>
+
+							<div class="form-group">
+								<label>Tanggal Input</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											<i class="fas fa-calendar"></i>
+										</div>
+									</div>
+									<input type="date" class="form-control" name="tanggal" required>
+								</div>
+							</div>
+
                             <div class="form-group">
 
                                 <label for="">Keterangan</label>
@@ -107,21 +120,28 @@ input[type=number] {
 
 								<div class="col-2">
                                     <div class="form-group my-2">
-
                                         <input type="number" min="1" class="form-control" id="kuantitas0" onkeyup="kuantitas(<?= '0'?>)" name="kuantitas[0]" required>
                                     </div>
                                 </div>
 
                                 <div class="col-3">
-                                    <div class="form-group my-2">
-
-                                        <input type="number" min="1" class="form-control" id="harga0" onkeyup="harga(<?= '0'?>)" name="harga[0]" required>
+                                    <div class="d-flex form-group my-2">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											Rp
+										</div>
+									</div>
+                                        <input type="text" min="1" class="form-control" id="harga0" onkeyup="harga(<?= '0'?>)" name="harga[0]" required>
                                     </div>
                                 </div>
 
                                 <div class="col-3">
-                                    <div class="form-group my-2">
-
+                                    <div class="d-flex form-group my-2">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											Rp
+										</div>
+									</div>
                                         <input type="text" class="form-control" id="totalHarga0" name="totalHarga[0]" readonly>
                                     </div>
                                 </div>		
@@ -145,6 +165,7 @@ input[type=number] {
     </section>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <script type="text/javascript">
     // $(document).ready(function() {
 
@@ -204,12 +225,22 @@ input[type=number] {
 						'</div>'+
                     '</div>'+
                     '<div class="col-3">'+
-                        '<div class="form-group my-2">'+
+                        '<div class="d-flex form-group my-2">'+
+						'<div class="input-group-prepend">'+
+										'<div class="input-group-text">'+
+											'Rp'+
+										'</div>'+
+									'</div>'+
 							'<input type="number" min="1" class="form-control" id="harga'+ fb++ +'" onkeyup="harga('+ gb++ +')" name="harga['+ hc++ +']" required>'+
                         '</div>'+
                     '</div>'+
                     '<div class="col-3">'+
-                        '<div class="form-group my-2">'+
+                        '<div class="d-flex form-group my-2">'+
+						'<div class="input-group-prepend">'+
+										'<div class="input-group-text">'+
+											'Rp'+
+										'</div>'+
+									'</div>'+
                                 '<input type="text" class="form-control" id="totalHarga'+ ic++ +'" name="totalHarga['+ jc++ +']" readonly>'+
                         '</div>'+
                     '</div>'+

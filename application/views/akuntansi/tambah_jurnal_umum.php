@@ -65,7 +65,7 @@
 							</div>
 
                             <div class="form-group d-flex">
-                                <button class="btn btn-primary d-flex align-items-center" type="submit"><i class="fas fa-check mr-2"></i>Simpan</button>
+                                <button class="btn btn-primary d-flex align-items-center" type="submit"><i class="fas fa-save mr-2"></i>Simpan</button>
                             </div>
                         </form>
 

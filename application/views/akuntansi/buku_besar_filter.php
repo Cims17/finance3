@@ -20,7 +20,8 @@
 									</div>
 									<div class="col-9 d-flex align-items-center">
 										<span class="mr-3">:</span>
-										<select class="form-control select2 w-100" name="idAkun">
+										<select class="form-control select2 w-100" name="idAkun" required>
+											<option value="" selected disabled>Pilih Nama Akun</option>
 											<?php foreach ($akun2 as $ak2) : ?>
 												<option value="<?= $ak2['idAkun'] ?>" <?php echo ($ak2['idAkun'] == $akun->idAkun) ? "selected" : ""; ?>><?= $ak2['namaAkun'] ?></option>
 											<?php endforeach ?>
@@ -75,7 +76,7 @@
 				<div class="card">
 					<div class="card-header d-flex justify-content-between">
 						<h4>
-							Nama Akun : <?= $nama['namaAkun'] ?>
+							Nama Akun : [<?= $akun->kodeAkun ?>]<?= $nama['namaAkun'] ?>
 						</h4>
 
 
@@ -88,13 +89,13 @@
 										<th rowspan="2" width="10px">
 											No
 										</th>
-										<th rowspan="2">Nama Akun</th>
-										<th rowspan="2">Kode Akun</th>
+										<th rowspan="2">Sumber</th>
 										<th rowspan="2">Keterangan</th>
 										<th rowspan="2">Tanggal</th>
+										<th rowspan="2">Debit</th>
+										<th rowspan="2">Kredit</th>
 
-										<th colspan="2" class="text-center">Saldo</th>
-										<th rowspan="2">Sumber</th>
+										<th colspan="2" class="text-center">Saldo Akhir</th>
 									</tr>
 									<tr class="text-center">
 										<th>Debit</th>
@@ -103,14 +104,15 @@
 								</thead>
 								<tbody><?php
 										$i = 1;
+										$data['debit_akun'] = array();
+										$data['kredit_akun'] = array();
 										foreach ($filter as $ps) : ?>
 										<tr>
 											<td class="text-center">
 												<?= $i++ ?>
 											</td>
-											<td><?= $ps['namaAkun'] ?></td>
 											<td>
-												<?= $ps['kodeAkun'] ?>
+												<?= $ps['input_from'] ?>
 											</td>
 											<td>
 												<?= $ps['keterangan'] ?>
@@ -119,18 +121,33 @@
 												<?php echo date("Y-m-d", strtotime($ps['tanggal']));  ?>
 											</td>
 											<td>
-											Rp <?= number_format($ps['debit'] , 0, ",", ",") ?>
+												Rp <?= number_format($ps['debit'], 0, ",", ",") ?>
 											</td>
-											<td>Rp <?= number_format($ps['debit'] , 0, ",", ",") ?></td>
 											<td>
-												<?= $ps['input_from'] ?>
+												Rp <?= number_format($ps['kredit'], 0, ",", ",") ?>
 											</td>
+											<?php array_push($data['debit_akun'], $ps['debit']);
+												array_push($data['kredit_akun'], $ps['kredit']); ?>
+											<td>
+												Rp <?= number_format(array_sum($data['debit_akun']) - array_sum($data['kredit_akun']), 0, ",", ",") ?>
+											</td>
+											<td>
 
-
-
+											</td>
 										</tr>
 									<?php endforeach ?>
+									
 								</tbody>
+								<tr>
+										<th rowspan="2" width="10px">
+										</th>
+										<th rowspan="2"></th>
+										<th rowspan="2" colspan="2">[<?php echo $akun->kodeAkun ?>] <?php echo $akun->namaAkun ?></th>
+										<th rowspan="2">Rp <?= number_format(array_sum($data['debit_akun']), 0, ",", ",") ?></th>
+										<th rowspan="2">Rp <?= number_format(array_sum($data['kredit_akun']), 0, ",", ",") ?></th>
+										<th rowspan="2">Rp <?= number_format(array_sum($data['debit_akun']) - array_sum($data['kredit_akun']), 0, ",", ",") ?></th>
+										<th rowspan="2"></th>
+									</tr>
 							</table>
 						</div>
 

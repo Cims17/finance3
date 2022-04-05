@@ -69,6 +69,7 @@ class Master_Data extends CI_Controller
 		$idAkun = $this->input->post('idAkun');
 		$nominal = $this->input->post('saldoAwal');
 		$saldoAwal = filter_var($nominal, FILTER_SANITIZE_NUMBER_INT);
+		$tanggal	= $this->input->post('tanggal');
 		$jenisSaldo = $this->input->post('jenisSaldo');
 		// echo $saldoAwal;
 		$keterangan = $this->input->post('keterangan');
@@ -78,7 +79,8 @@ class Master_Data extends CI_Controller
 				'idAkun'        => $idAkun,
 				'kredit'       => $saldoAwal,
 				'keterangan'       => $keterangan,
-				'input_from'       => 'Saldo Awal'
+				'input_from'       => 'Saldo Awal',
+				'tanggal'		=> $tanggal,	
 			);
 			
 			$save = $this->Model_akun->insert_log($data3);
@@ -87,12 +89,14 @@ class Master_Data extends CI_Controller
 					'idAkun'        => $idAkun,
 					'kredit'       => $saldoAwal,
 					'idLog'       => $this->db->insert_id(),
+					'tanggal'		=> $tanggal,	
 				);
 				$this->Model_akuntansi->insert_data('kredit_log', $data2);
 				$data = array(
 					'idAkun'	=> $idAkun,
 					'saldoAwal'	=> $saldoAwal,
-					'tipe_awal'	=> $jenisSaldo	
+					'tipe_awal'	=> $jenisSaldo,
+					'tanggal'		=> $tanggal,		
 				);
 
 				$this->Model_akuntansi->insert_data('saldo_awal_log', $data);
@@ -103,7 +107,8 @@ class Master_Data extends CI_Controller
 				'idAkun'        => $idAkun,
 				'debit'       => $saldoAwal,
 				'keterangan'       => $keterangan,
-				'input_from'       => 'Saldo Awal'
+				'input_from'       => 'Saldo Awal',
+				'tanggal'		=> $tanggal,	
 			);
 			
 			$save = $this->Model_akun->insert_log($data3);
@@ -112,12 +117,14 @@ class Master_Data extends CI_Controller
 					'idAkun'        => $idAkun,
 					'debit'       => $saldoAwal,
 					'idLog'       => $this->db->insert_id(),
+					'tanggal'		=> $tanggal,	
 				);
 				$this->Model_akuntansi->insert_data('debit_log', $data2);
 				$data = array(
 					'idAkun'        => $idAkun,
 					'saldoAwal'       => $saldoAwal,
-					'tipe_awal'	=> $jenisSaldo	
+					'tipe_awal'	=> $jenisSaldo	,
+					'tanggal'		=> $tanggal,	
 				);
 
 				$this->Model_akuntansi->insert_data('saldo_awal_log', $data);

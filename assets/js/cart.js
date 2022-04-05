@@ -265,6 +265,22 @@ function getketerangan(id) {
 	output.value = input;
 	}
 
+	function theDate(what) {
+		let dateObj = new Date(what.value);
+		let pickedDate = showDate(dateObj);
+		// pickedDate may be yesterday's date
+		console.log("picked date is " + (pickedDate || 'empty!'));
+		document.getElementById('tanggalhasil').value = (pickedDate || "empty!");
+	  }
+	  
+	  function showDate(theDate) {
+		console.log("typeof theDate = " + typeof theDate);
+		if (typeof theDate == 'object') {
+		  // Date object month starts at 0 :/
+			return (theDate.getFullYear() + "-" + ("0" + (theDate.getMonth() + 1)).slice(-2) + "-" + ("0" + theDate.getDate()).slice(-2));
+	  }
+	}
+
 function submit_terjual(){
 	document.getElementById('formTerjual').submit();
 	sessionStorage.removeItem("shoppingCart", JSON.stringify(cart));

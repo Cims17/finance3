@@ -28,7 +28,7 @@ class RPDF extends FPDF
 		$nb = 0;
 		for ($i = 0; $i < count($data); $i++)
 			$nb = max($nb, $this->NbLines($this->widths[$i], $data[$i]));
-		$h = 7 * $nb;
+		$h = 5 * $nb;
 		//Issue a page break first if needed
 		$this->CheckPageBreak($h);
 		//Draw the cells of the row
@@ -41,7 +41,7 @@ class RPDF extends FPDF
 			//Draw the border
 			$this->Rect($x, $y, $w, $h);
 			//Print the text
-			$this->MultiCell($w, 7, $data[$i], 0, $a);
+			$this->MultiCell($w, 5, $data[$i], 0, $a);
 			//Put the position to the right of the cell
 			$this->SetXY($x + $w, $y);
 		}
@@ -139,50 +139,72 @@ class RPDF extends FPDF
 			$this->Ln(2);
 
 			$this->SetLineWidth(0.8);
-			$this->Line(10, $this->GetY(), 200, $this->GetY());
+			$this->Line(7, $this->GetY(), 203, $this->GetY());
 			$this->SetLineWidth(0);
 		} else {
 		}
 
 		$this->Ln(3);
 		$h = 6;
-		$left = 40;
+		$left = 50;
 		$top = 80;
 		#tableheader
 		$this->SetFont('Arial', 'B', 10);
 		$this->SetFillColor(255);
-		$left = $this->GetX();
-		$this->Cell(25, 12, 'Tanggal', 1, 0, 'C', true);
-		$this->SetX($left += 25);
-		$this->Cell(105, 12, 'Keterangan', 1, 0, 'C', true);
-		$this->SetX($left += 105);
-		$this->Cell(60, $h, 'Saldo', 1, 1, 'C', true);
+		$left = $this->GetX()-3;
+		$this->SetX($left);
+		$this->Cell(21, 12, 'Tanggal', 1, 0, 'C', true);
+		$this->SetX($left += 21);
+		$this->Cell(23, 12, 'Sumber', 1, 0, 'C', true);
+		$this->SetX($left += 23);
+		$this->Cell(32, 12, 'Keterangan', 1, 0, 'C', true);
+		$this->SetX($left += 32);
+		$this->Cell(30, 12, 'Debit', 1, 0, 'C', true);
+		$this->SetX($left += 30);
+		$this->Cell(30, 12, 'Kredit', 1, 0, 'C', true);
+		$this->SetX($left += 30);
+		$this->Cell(60, $h, 'Saldo Akhir', 1, 1, 'C', true);
 		$this->SetX($left += 0);
 		$this->Cell(30, $h, 'Debit', 1, 0, 'C', true);
 		$this->SetX($left += 30);
 		$this->Cell(30, $h, 'Kredit', 1, 1, 'C', true);
-		$this->Cell(190, $h,"[". $nama['kodeAkun'] ."] ". $nama['namaAkun'], 1, 1, 'L', true);
+		$left = $this->GetX()-3;
+		$this->SetX($left);
+		$this->Cell(196, $h,"[". $nama['kodeAkun'] ."] ". $nama['namaAkun'], 1, 1, 'L', true);
 		//$this->Ln(20);
-
+		
 		$this->SetFont('Arial', '', 10);
-		$this->SetWidths(array(25, 105, 30, 30));
-		$this->SetAligns(array('C', 'L', 'R', 'R'));
+		$this->SetWidths(array(21, 23, 32, 30, 30,30,30));
+		$this->SetAligns(array('C','C', 'L', 'R', 'R', 'R', 'R'));
 		$no = 1;
 		$this->SetFillColor(255);
+		$data['debit_akun'] = array();
+		$data['kredit_akun'] = array();
 		foreach ($filter as $ps) {
+			array_push($data['debit_akun'], $ps['debit']);
+			array_push($data['kredit_akun'], $ps['kredit']);
+			$left = $this->GetX()-3;
+			$this->SetX($left);
 			$this->Row(
 				array(
 					$ps['tanggal'],
+					$ps['input_from'],
 					$ps['keterangan'],
 					"Rp.". number_format($ps['debit']),
-					"Rp.". number_format($ps['kredit'])
+					"Rp.". number_format($ps['kredit']),
+					"Rp.". number_format(array_sum($data['debit_akun']) - array_sum($data['kredit_akun']), 0, ",", ","),
+					'',
 				)
 			);
 		}
+		$left = $this->GetX()-3;
+		$this->SetX($left);
 		$this->SetFont('Arial', 'B', 10);
-		$this->Cell(130, $h, 'Jumlah Total', 1, 0, 'R', true);
+		$this->Cell(76, $h, $nama['kodeAkun'] ." ". $nama['namaAkun'], 1, 0, 'R', true);
 		$this->Cell(30, $h, "Rp.". number_format($jumlah_total_debit), 1, 0, 'R', true);
 		$this->Cell(30, $h, "Rp.". number_format($jumlah_total_kredit), 1, 0, 'R', true);
+		$this->Cell(30, $h, "Rp.". number_format(array_sum($data['debit_akun']) - array_sum($data['kredit_akun'])), 1, 0, 'R', true);
+		$this->Cell(30, $h, " ", 1, 0, 'R', true);
 	}
 
 	// Page Footer

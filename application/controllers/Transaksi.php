@@ -91,10 +91,11 @@ class Transaksi extends CI_Controller
 		$noTransaksi = $this ->input->post('noTransaksi');
 		$idPelanggan = $this->input->post('idPelanggan');
 		$keterangan = $this->input->post('keterangan');
+		$tanggal = $this->input->post('tanggal');
 
 		$data = array(
 			'noTransaksi' => $noTransaksi,
-			'tanggal' => date('Y-m-d'),
+			'tanggal' => $tanggal,
 			'idPelanggan' => $idPelanggan,
 			'keterangan' => $keterangan,
 			'total' => $total_belanja,
@@ -200,13 +201,14 @@ class Transaksi extends CI_Controller
 		$idSupp			= $this->input->post('idSupplier');
 		$keterangan		= $this->input->post('keterangan');
 		$totalPembelian	= 0;
+		$tanggal		= $this->input->post('tanggal');
 
 		foreach($_POST['totalHarga'] as $key => $val) {
 			$totalPembelian += $val;
 
 			$data = array(
 				'noTransaksi'		=> $noTransaksi,
-				'tanggal'			=> date('Y-m-d'),
+				'tanggal'			=> $tanggal,
 				'idSupp'			=> $idSupp,
 				'keterangan'		=> $keterangan,
 				'totalPembelian'	=> $totalPembelian,

@@ -61,9 +61,8 @@ class RPDF extends FPDF{
                         $this->SetFont('Arial', '', 11);
                         $this->SetFillColor(255, 255, 255);
                         $this->SetX(25);
-                        $this->Cell(30, 6, $ak['kodeAkun'], 0, 0, 'L');
-                        $this->Cell(80, 6, $ak['namaAkun'], 0, 0, 'L');
-                        $this->Cell(50, 6, "Rp. ". number_format($ak['debit'] - $ak['kredit']), 0, 1, 'R');
+                        $this->Cell(70, 6, $ak['namaAkun'], 0, 0, 'L');
+                        $this->Cell(90, 6, "Rp. ". number_format($ak['debit'] - $ak['kredit']), 0, 1, 'R');
                         $this->SetFont('Arial', '', 10);
                         $this->Ln(1);
                     }
@@ -78,7 +77,7 @@ class RPDF extends FPDF{
 		$this->Ln(3);
 		$this->SetFont('Arial', 'B', 12);
 		$this->SetFillColor(255, 255, 255);
-		$this->Cell(50,6,'Total Pendapatan',0,0,'L');
+		$this->Cell(50,6,'Laba Kotor',0,0,'L');
 		$this->Cell(70,6,'',0,0,'L');
 		$this->Cell(70,6,"Rp. ". number_format($jml_pjl['totalPenjualan'] - $total_hpp),0,1,'R');
 		$this->SetLineWidth(0.6);
@@ -99,9 +98,8 @@ class RPDF extends FPDF{
 			$this->SetFont('Arial', '', 11);
 			$this->SetFillColor(255, 255, 255);
 			$this->SetX(25);
-			$this->Cell(30,6,'Pembelian',0,0,'L');
-			$this->Cell(80,6,'',0,0,'L');
-			$this->Cell(50,6,"Rp. ". number_format($jml_pbl['totalPembelian']),0,1,'R');
+			$this->Cell(70,6,'Pembelian',0,0,'L');
+			$this->Cell(90,6,"Rp. ". number_format($jml_pbl['totalPembelian']),0,1,'R');
 			$this->SetFont('Arial','',10);
 			$this->Ln(1);
 
@@ -112,9 +110,8 @@ class RPDF extends FPDF{
                         $this->SetFont('Arial', '', 11);
                         $this->SetFillColor(255, 255, 255);
                         $this->SetX(25);
-                        $this->Cell(30, 6, $ak['kodeAkun'], 0, 0, 'L');
-                        $this->Cell(80, 6, $ak['namaAkun'], 0, 0, 'L');
-                        $this->Cell(50, 6, "Rp. ". number_format($ak['debit'] - $ak['kredit']), 0, 1, 'R');
+                        $this->Cell(70, 6, $ak['namaAkun'], 0, 0, 'L');
+                        $this->Cell(90, 6, "Rp. ". number_format($ak['debit'] - $ak['kredit']), 0, 1, 'R');
                         $this->SetFont('Arial', '', 10);
                         $this->Ln(1);
                     }

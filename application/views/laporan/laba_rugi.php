@@ -62,9 +62,8 @@
 														<?php if ($jns['idJenis'] == $ak['idJenis']) : ?>
 															<tr>
 																<td class="border-bottom"></td>
-																<td class="text-left border-bottom"><?= $ak['kodeAkun'] ?></td>
 																<td class="text-left border-bottom"><?= $ak['namaAkun'] ?></td>
-																<td class="text-right border-bottom">
+																<td class="text-right border-bottom" colspan="2">
 																	Rp. <?= number_format($ak['debit'] - $ak['kredit'], 0, '', '.') ?>
 																</td>
 																<td class="border-bottom"></td>
@@ -75,7 +74,7 @@
 												<?php endif ?>
 											<?php endforeach ?>
 									<tr>
-										<th class="text-left border-bottom" colspan="4">Total Pendapatan</th>
+										<th class="text-left border-bottom" colspan="4">Laba Kotor</th>
 										<th class="text-center border-bottom" colspan="1">Rp. <?= number_format($jml_pjl['totalPenjualan'] - $total_hpp, 0, '', '.') ?></th>
 									</tr>
 									<tr>
@@ -97,9 +96,8 @@
 														<?php if ($jns['idJenis'] == $ak['idJenis']) : ?>
 															<tr>
 																<td class="border-bottom"></td>
-																<td class="text-left border-bottom"><?= $ak['kodeAkun'] ?></td>
 																<td class="text-left border-bottom"><?= $ak['namaAkun'] ?></td>
-																<td class="text-right border-bottom">
+																<td class="text-right border-bottom" colspan="2">
 																	Rp. <?= number_format($ak['debit'] - $ak['kredit'], 0, '', '.') ?>
 																</td>
 																<td class="border-bottom"></td>
@@ -133,7 +131,7 @@
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="formModal">Cetak PDF Posisi Keuangan</h5>
+				<h5 class="modal-title" id="formModal">Cetak PDF Laba Rugi</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>

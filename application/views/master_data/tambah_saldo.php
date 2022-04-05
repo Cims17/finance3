@@ -13,14 +13,15 @@
 						<form action="<?php base_url() ?>save_saldo" method="post" enctype="multipart/form-data">
 							<div class="form-group">
 								<label for="">Akun</label>
-								<select type="text" class="form-control select2" name="idAkun" id="idAkun">
+								<select type="text" class="form-control select2" name="idAkun" id="idAkun" required>
 									<option value="" selected disabled>Pilih Akun</option>
-									
+
 									<?php foreach ($akun as $ak) { ?>
-										<?php if($ak['saldoAwal'] == 0 ) { ?>
-										<option value="<?= $ak['idAkun'] ?>"><?= $ak['namaAkun'] ?> </option>
-									<?php } } ?>
-									
+										<?php if ($ak['saldoAwal'] == 0) { ?>
+											<option value="<?= $ak['idAkun'] ?>"><?= $ak['namaAkun'] ?> </option>
+									<?php }
+									} ?>
+
 								</select>
 							</div>
 							<div class="form-group">
@@ -31,13 +32,24 @@
 											Rp
 										</div>
 									</div>
-									<input type="text" class="form-control" name="saldoAwal" id="saldoAwal">
+									<input type="text" class="form-control" name="saldoAwal" id="saldoAwal" required>
 								</div>
 
 							</div>
 							<div class="form-group">
+								<label>Tanggal Input</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											<i class="fas fa-calendar"></i>
+										</div>
+									</div>
+									<input type="date" class="form-control" name="tanggal" required>
+								</div>
+							</div>
+							<div class="form-group">
 								<label for="">Jenis Saldo</label>
-								<select class="form-control select2" name="jenisSaldo">
+								<select class="form-control select2" name="jenisSaldo" required>
 									<option value="Kredit">Kredit</option>
 									<option value="Debit">Debit</option>
 								</select>
@@ -55,7 +67,7 @@
 
 							</div>
 							<div class="form-group d-flex">
-								<button class="btn btn-primary d-flex align-items-center" type="submit"><i class="fas fa-check mr-2"></i>Simpan</button>
+								<button class="btn btn-primary d-flex align-items-center" type="submit"><i class="fas fa-save mr-2"></i>Simpan</button>
 							</div>
 						</form>
 

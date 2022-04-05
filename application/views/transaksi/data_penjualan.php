@@ -183,7 +183,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="<?php base_url() ?>pdf_data_penjualan" enctype="multipart/form-data" method="post">
+        <form action="<?php base_url() ?>pdf_data_penjualan" enctype="multipart/form-data" method="post" target="_blank">
           <div class="form-group">
             <label>Tanggal Mulai</label>
             <div class="input-group">

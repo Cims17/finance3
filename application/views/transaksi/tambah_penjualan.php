@@ -125,6 +125,7 @@
                                     <input hidden id="noTransaksi" type="text" name="noTransaksi" value="<?php echo $noTransaksi ?>" class="form-control">
                                     <input hidden id="idPelangganHasil" type="text" name="idPelanggan" class="form-control">
                                     <input hidden id="keteranganhasil" type="text" name="keterangan" class="form-control">
+									<input hidden id="tanggalhasil" type="text" name="tanggal" class="form-control">
 
                                     <div class="d-flex">
                                         <div class="clear-cart btn btn-danger mr-3" type="button">
@@ -199,6 +200,17 @@
                                             </select>
                                         </div>
                                     </div>
+									<div class="form-group">
+										<label>Tanggal Input</label>
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<div class="input-group-text">
+													<i class="fas fa-calendar"></i>
+												</div>
+											</div>
+											<input type="date" class="form-control" onchange="theDate(this)" required>
+										</div>
+									</div>
                                     <div class="form-group">
                                         <label>
                                             Keterangan
