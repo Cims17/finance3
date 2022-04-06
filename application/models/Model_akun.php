@@ -15,7 +15,7 @@ class Model_akun extends CI_Model {
         $this->db->select('*');
         $this->db->from('akun,jenis_akun');
         $this->db->where('akun.idJenis = jenis_akun.idJenis');
-        $this->db->where('akun.saldoAwal != 0');
+        // $this->db->where('akun.saldoAwal != 0');
 		$this->db->join('saldo_awal_log', 'akun.idAkun=saldo_awal_log.idAkun');
         // $this->db->join('saldo', 'akun.idAkun=saldo.idAkun');
 

@@ -121,7 +121,7 @@
 																<td class="border-bottom"></td>
 																<td class="text-left border-bottom"><?= $ak['namaAkun'] ?></td>
 																<td class="text-right border-bottom" colspan="2">
-																	Rp. <?= number_format($ak['debit'] - $ak['kredit'], 0, '', '.') ?>
+																	Rp. <?= number_format(abs($ak['debit'] - $ak['kredit']), 0, '', '.') ?>
 																</td>
 																<td class="border-bottom"></td>
 															</tr>
@@ -133,7 +133,7 @@
 														<th class="text-left border-bottom" colspan="3">Total <?= $jns['namaJenis'] ?></th>
 														<?php foreach ($total_jenis as $ttl_jns) { ?>
 															<?php if ($jns['idJenis'] == $ttl_jns['idJenis']) { ?>
-																<th class="text-center border-bottom">Rp. <?= number_format($ttl_jns['debit'] - $ttl_jns['kredit'], 0, '', '.') ?></th>
+																<th class="text-center border-bottom">Rp. <?= number_format(abs($ttl_jns['debit'] - $ttl_jns['kredit']), 0, '', '.') ?></th>
 														<?php }
 														} ?>
 													</tr>

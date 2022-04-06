@@ -47,14 +47,14 @@
                                             <td><?= $ak['namaJenis'] ?></td>
                                             <td>
                                                 <?php
-                                                if ($ak['debit']) {
-													echo 'Rp '.  number_format($ak['debit'], 0, ",", ",");
+                                                if (($ak['debit']-$ak['kredit'])>0) {
+													echo 'Rp '.  number_format($ak['debit']-$ak['kredit'], 0, ",", ",");
                                                 } else {
                                                     echo "-";
                                                 } ?></td>
                                             <td><?php
-                                                if ($ak['kredit']) {
-													echo 'Rp '.  number_format($ak['kredit'], 0, ",", ",");
+                                                if (($ak['debit']-$ak['kredit'])<0) {
+													echo 'Rp '.  number_format(abs($ak['debit']-$ak['kredit']), 0, ",", ",");
                                                 } else {
                                                     echo "-";
                                                 } ?></td>
