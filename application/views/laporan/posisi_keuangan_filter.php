@@ -76,7 +76,7 @@
 																<td class="border-bottom"></td>
 																<td class="text-left border-bottom" style="width:45%"><?= $ak['namaAkun'] ?></td>
 																<td class="text-right border-bottom" colspan="2">
-																	Rp. <?= number_format($ak['debit'] - $ak['kredit'], 0, '', '.') ?>
+																	Rp. <?= number_format(abs($ak['debit'] - $ak['kredit']), 0, '', '.') ?>
 																</td>
 																<td class="border-bottom"></td>
 															</tr>
