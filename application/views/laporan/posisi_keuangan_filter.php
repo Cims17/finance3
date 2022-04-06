@@ -140,11 +140,15 @@
 												<?php endif ?>
 											<?php endforeach ?>
 											<tr>
+										<th class="text-left " colspan="4">Laba / Rugi Bersih</th>
+										<th class="text-center">Rp. <?= number_format($laba_rugi_bersih , 0, '', '.') ?></td>
+									</tr>
+											<tr>
 												<th class="text-left border-bottom" colspan="3">
 													<h4>Total Liabilitas dan Ekuitas</h4>
 												</th>
 												<th class="text-center border-bottom" colspan="2">
-													<h4>Rp. <?= number_format($total_liabilitas_ekuitas, 0, '', '.') ?></h4>
+													<h4>Rp. <?= number_format($total_liabilitas_ekuitas + $laba_rugi_bersih, 0, '', '.') ?></h4>
 												</th>
 											</tr>
 										</tbody>
