@@ -294,6 +294,7 @@ class Laporan extends CI_Controller
 		if (!$mulai) {
 			$this->load->view('laporan/pdf/pdf_posisi_keuangan_filter');
 		} else {
+			$data['jumlah_penjualan']   = $this->Model_laporan->total_penjualan_filter($selesai, $mulai)->result_array();
 			$data['total_jenis']	= $this->Model_laporan->get_posisi_keuangan_totaljenis($mulai, $selesai)->result_array();
 			$data['total_tipe']	= $this->Model_laporan->get_posisi_keuangan_totaltipe($mulai, $selesai)->result_array();
 
@@ -320,6 +321,33 @@ class Laporan extends CI_Controller
 			}
 
 			$data['total_liabilitas_ekuitas'] =array_sum($data['debit_liabilitas_ekuitas']) - array_sum($data['kredit_liabilitas_ekuitas']);
+
+
+			// Menghitung laba/rugi bersihhhh
+			// total tipe akun aset
+			$data['debit_beban'] =array();
+			$data['kredit_beban'] =array();
+			$data['debit_hpp'] =array();
+			$data['kredit_hpp'] =array();
+			foreach ($data['total_jenis'] as $ttl_jns) {
+                if ($ttl_jns['id_tipeAkun'] == 2) {
+                    array_push($data['debit_beban'], $ttl_jns['debit']);
+					array_push($data['kredit_beban'], $ttl_jns['kredit']);
+                }
+			}
+
+			//total tipe aku HPP
+			foreach ($data['total_jenis'] as $ttl_jns) {
+                if ($ttl_jns['id_tipeAkun'] == 5) {
+                    array_push($data['debit_hpp'], $ttl_jns['debit']);
+					array_push($data['kredit_hpp'], $ttl_jns['kredit']);
+                }
+			}
+
+			$data['total_beban'] =array_sum($data['debit_beban']) - array_sum($data['kredit_beban']);
+			$data['total_hpp'] =array_sum($data['debit_hpp']) - array_sum($data['kredit_hpp']);
+			$data['ttl_pjl']=array_sum(array_column($data['jumlah_penjualan'],'totalPenjualan'));
+			$data['laba_rugi_bersih'] = ($data['ttl_pjl'] - $data['total_hpp']) -  $data['total_beban'];
 
 			$data['akun']	= $this->Model_laporan->get_posisi_keuangan($mulai, $selesai)->result_array();
 			$data['jenis']	= $this->Model_akun->get_jenis_akun()->result_array();

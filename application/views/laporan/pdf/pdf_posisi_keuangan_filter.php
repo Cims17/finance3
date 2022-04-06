@@ -23,7 +23,7 @@ class RPDF extends FPDF
 	}
 
 	// Page Content
-	function Content($jenis, $akun, $total_jenis, $total_aset, $total_liabilitas_ekuitas, $tgl)
+	function Content($jenis, $akun, $total_jenis, $total_aset, $total_liabilitas_ekuitas, $tgl,$laba_rugi_bersih)
 	{
 		if ($this->PageNo() == 1) {
 			$this->Ln(3);
@@ -72,7 +72,7 @@ class RPDF extends FPDF
 						$this->SetFillColor(255, 255, 255);
 						$this->SetX(15);
 						$this->Cell(70, 6, $ak['namaAkun'], 0, 0, 'L');
-						$this->Cell(75, 6, "Rp. " . number_format($ak['debit'] - $ak['kredit']), 0, 1, 'R');
+						$this->Cell(75, 6, "Rp. " . number_format(abs($ak['debit'] - $ak['kredit'])), 0, 1, 'R');
 						$this->SetFont('Arial', '', 10);
 						$this->Ln(1);
 					}
@@ -86,7 +86,7 @@ class RPDF extends FPDF
 				$this->Cell(100, 6, "Total " . $jns['namaJenis'], 0, 0, 'L');
 				foreach ($total_jenis as $ttl_jns) {
 					if ($jns['idJenis'] == $ttl_jns['idJenis']) {
-						$this->Cell(60, 6, "Rp. " . number_format($ttl_jns['debit'] - $ttl_jns['kredit']), 0, 1, 'R');
+						$this->Cell(60, 6, "Rp. " . number_format(abs($ttl_jns['debit'] - $ttl_jns['kredit'])), 0, 1, 'R');
 					}
 				}
 				$this->SetFont('Arial', '', 10);
@@ -102,7 +102,7 @@ class RPDF extends FPDF
 		$this->SetFillColor(255, 255, 255);
 		$this->Cell(50, 6, 'Total Aset', 0, 0, 'L');
 		$this->Cell(70, 6, '', 0, 0, 'L');
-		$this->Cell(70, 6, "Rp. " . number_format($total_aset), 0, 1, 'R');
+		$this->Cell(70, 6, "Rp. " . number_format(abs($total_aset)), 0, 1, 'R');
 		$this->Ln(6);
 		$this->SetLineWidth(0.6);
 		$this->Line(10, $this->GetY(), 200, $this->GetY());
@@ -138,7 +138,7 @@ class RPDF extends FPDF
 						$this->SetFillColor(255, 255, 255);
 						$this->SetX(15);
 						$this->Cell(70, 6, $ak['namaAkun'], 0, 0, 'L');
-						$this->Cell(75, 6, "Rp. " . number_format($ak['debit'] - $ak['kredit']), 0, 1, 'R');
+						$this->Cell(75, 6, "Rp. " . number_format(abs($ak['debit'] - $ak['kredit'])), 0, 1, 'R');
 						$this->SetFont('Arial', '', 10);
 						$this->Ln(1);
 					}
@@ -152,7 +152,7 @@ class RPDF extends FPDF
 				$this->Cell(100, 6, "Total " . $jns['namaJenis'], 0, 0, 'L');
 				foreach ($total_jenis as $ttl_jns) {
 					if ($jns['idJenis'] == $ttl_jns['idJenis']) {
-						$this->Cell(60, 6, "Rp. " . number_format($ttl_jns['debit'] - $ttl_jns['kredit']), 0, 1, 'R');
+						$this->Cell(60, 6, "Rp. " . number_format(abs($ttl_jns['debit'] - $ttl_jns['kredit'])), 0, 1, 'R');
 					}
 				}
 				$this->SetFont('Arial', '', 10);
@@ -163,12 +163,29 @@ class RPDF extends FPDF
 				$this->Ln(3);
 			}
 		}
+		$this->SetFont('Arial', 'B', 11);
+		$this->Ln(3);
+		$this->SetLineWidth(0.3);
+		$this->Line(10, $this->GetY(), 200, $this->GetY());
+		$this->SetLineWidth(0);
+		$this->SetX(15);
+		$this->Cell(100, 6, "Laba / Rugi Bersih " , 0, 0, 'L');
+		$this->Cell(60, 6, "Rp. " . number_format($laba_rugi_bersih), 0, 1, 'R');
+		$this->Ln(1);
+		$this->SetLineWidth(0.6);
+		$this->Line(10, $this->GetY()+6, 200, $this->GetY()+6);
+		$this->SetLineWidth(0);
+		$this->Ln(3);
 		$this->Ln(3);
 		$this->SetFont('Arial', 'B', 15);
 		$this->SetFillColor(255, 255, 255);
 		$this->Cell(50, 6, 'Total Liabilitas dan Ekuitas', 0, 0, 'L');
 		$this->Cell(70, 6, '', 0, 0, 'L');
-		$this->Cell(70, 6, "Rp. " . number_format($total_liabilitas_ekuitas), 0, 1, 'R');
+        if ($laba_rugi_bersih > 0) {
+            $this->Cell(70, 6, "Rp. " . number_format(abs($total_liabilitas_ekuitas + $laba_rugi_bersih)), 0, 1, 'R');
+        } else {
+			$this->Cell(70, 6, "Rp. " . number_format(abs($total_liabilitas_ekuitas - $laba_rugi_bersih)), 0, 1, 'R');
+		}
 		$this->Ln(6);
 		$this->SetLineWidth(0.6);
 		$this->Line(10, $this->GetY(), 200, $this->GetY());
@@ -201,5 +218,5 @@ $this->myfpdf = new RPDF();
 $this->myfpdf->AliasNbPages();
 $this->myfpdf->AddPage();
 $this->myfpdf->SetTitle('LAPORAN POSISI KEUANGAN TOKO ANITA', true);
-$this->myfpdf->Content($jenis, $akun, $total_jenis, $total_aset, $total_liabilitas_ekuitas, $tgl);
+$this->myfpdf->Content($jenis, $akun, $total_jenis, $total_aset, $total_liabilitas_ekuitas, $tgl, $laba_rugi_bersih);
 $this->myfpdf->Output('laporan-posisi-keuangan [' . date("d-M-Y",  strtotime($tgl['mulai'])) . ' s/d ' . date("d-M-Y",  strtotime($tgl['selesai'])) . '].pdf', 'I');
