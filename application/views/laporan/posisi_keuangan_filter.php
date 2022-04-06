@@ -148,7 +148,7 @@
 													<h4>Total Liabilitas dan Ekuitas</h4>
 												</th>
 												<th class="text-center border-bottom" colspan="2">
-													<h4>Rp. <?= number_format($total_liabilitas_ekuitas + $laba_rugi_bersih, 0, '', '.') ?></h4>
+													<h4>Rp. <?= number_format(abs($total_liabilitas_ekuitas + $laba_rugi_bersih), 0, '', '.') ?></h4>
 												</th>
 											</tr>
 										</tbody>
