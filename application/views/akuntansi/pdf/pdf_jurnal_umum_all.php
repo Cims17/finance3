@@ -125,6 +125,7 @@ class RPDF extends FPDF
 			$this->SetFillColor(255, 255, 255);
 			$this->Cell(90, 6, "Jurnal Umum", 0, 0, 'L', 1);
 			$this->Cell(100, 6, "Printed date : " . date('d-M-Y'), 0, 1, 'R', 1);
+			$this->Ln(3);
 		}
 	}
 

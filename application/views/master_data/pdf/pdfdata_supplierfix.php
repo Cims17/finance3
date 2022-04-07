@@ -27,7 +27,7 @@ private $widths;
 	  $nb=0;
 	  for($i=0;$i<count($data);$i++)
 		  $nb=max($nb,$this->NbLines($this->widths[$i],$data[$i]));
-	  $h=10*$nb;
+	  $h=6*$nb;
 	  //Issue a page break first if needed
 	  $this->CheckPageBreak($h);
 	  //Draw the cells of the row
@@ -41,7 +41,7 @@ private $widths;
 		  //Draw the border
 		  $this->Rect($x,$y,$w,$h);
 		  //Print the text
-		  $this->MultiCell($w,10,$data[$i],0,$a);
+		  $this->MultiCell($w,6,$data[$i],0,$a);
 		  //Put the position to the right of the cell
 		  $this->SetXY($x+$w,$y);
 	  }
@@ -120,7 +120,7 @@ private $widths;
 			$this->SetFont('Arial', 'B', 12);
 			$this->SetFillColor(255, 255, 255);
 			$this->Cell(0, 6, "TOKO ANITA",0,1,'C',1);
-			$this->Cell(0, 6, "Laporan Data Pelanggan",0,1,'C',1);
+			$this->Cell(0, 6, "Laporan Data Supplier",0,1,'C',1);
 			$this->Ln(2);
 
 			$this->SetLineWidth(0.8);
@@ -129,7 +129,7 @@ private $widths;
         }else{
 			$this->SetFont('Arial','I',9);
 			$this->SetFillColor(255,255,255);
-			$this->Cell(90,6,"Data Pelanggan",0,0,'L',1);
+			$this->Cell(90,6,"Data Supplier",0,0,'L',1);
 			$this->Cell(100,6,"Printed date : " . date('d-M-Y'),0,1,'R',1);
 		}
 
