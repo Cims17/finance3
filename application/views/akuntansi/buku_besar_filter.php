@@ -129,10 +129,20 @@
 											<?php array_push($data['debit_akun'], $ps['debit']);
 												array_push($data['kredit_akun'], $ps['kredit']); ?>
 											<td>
-												Rp <?= number_format(array_sum($data['debit_akun']) - array_sum($data['kredit_akun']), 0, ",", ",") ?>
+											<?php
+                                                if ((array_sum($data['debit_akun'])- array_sum($data['kredit_akun']))>0) {
+													echo 'Rp '.  number_format(array_sum($data['debit_akun'])-array_sum($data['kredit_akun']), 0, ",", ",");
+                                                } else {
+                                                    echo "-";
+                                                } ?>
 											</td>
 											<td>
-
+											<?php
+                                                if ((array_sum($data['debit_akun'])-array_sum($data['kredit_akun']))<0) {
+													echo 'Rp '.  number_format(abs(array_sum($data['debit_akun'])-array_sum($data['kredit_akun'])), 0, ",", ",");
+                                                } else {
+                                                    echo "-";
+                                                } ?>
 											</td>
 										</tr>
 									<?php endforeach ?>
@@ -145,8 +155,16 @@
 										<th rowspan="2" colspan="2">[<?php echo $akun->kodeAkun ?>] <?php echo $akun->namaAkun ?></th>
 										<th rowspan="2">Rp <?= number_format(array_sum($data['debit_akun']), 0, ",", ",") ?></th>
 										<th rowspan="2">Rp <?= number_format(array_sum($data['kredit_akun']), 0, ",", ",") ?></th>
-										<th rowspan="2">Rp <?= number_format(array_sum($data['debit_akun']) - array_sum($data['kredit_akun']), 0, ",", ",") ?></th>
-										<th rowspan="2"></th>
+										<th rowspan="2"><?php  if ((array_sum($data['debit_akun'])-array_sum($data['kredit_akun']))>0) {
+											echo 'Rp '. number_format(array_sum($data['debit_akun']) - array_sum($data['kredit_akun']), 0, ",", ",");
+										 } else {
+											echo "-";
+										} ?></th>
+										<th rowspan="2"><?php  if ((array_sum($data['debit_akun'])-array_sum($data['kredit_akun']))<0) {
+											echo 'Rp '. number_format(abs(array_sum($data['debit_akun']) - array_sum($data['kredit_akun'])), 0, ",", ",");
+										 } else {
+											echo "-";
+										} ?></th>
 									</tr>
 							</table>
 						</div>

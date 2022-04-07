@@ -185,17 +185,33 @@ class RPDF extends FPDF
 			array_push($data['kredit_akun'], $ps['kredit']);
 			$left = $this->GetX()-3;
 			$this->SetX($left);
-			$this->Row(
-				array(
-					$ps['tanggal'],
-					$ps['input_from'],
-					$ps['keterangan'],
-					"Rp.". number_format($ps['debit']),
-					"Rp.". number_format($ps['kredit']),
-					"Rp.". number_format(array_sum($data['debit_akun']) - array_sum($data['kredit_akun']), 0, ",", ","),
-					'',
-				)
-			);
+            if ((array_sum($data['debit_akun'])- array_sum($data['kredit_akun']))>0) {
+                $this->Row(
+                    array(
+                    $ps['tanggal'],
+                    $ps['input_from'],
+                    $ps['keterangan'],
+                    "Rp.". number_format($ps['debit']),
+                    "Rp.". number_format($ps['kredit']),
+                    "Rp.". number_format(array_sum($data['debit_akun']) - array_sum($data['kredit_akun'])),
+                    '',
+                )
+                );
+            }
+			 else {
+				$this->Row(
+					array(
+						$ps['tanggal'],
+						$ps['input_from'],
+						$ps['keterangan'],
+						"Rp.". number_format($ps['debit']),
+						"Rp.". number_format($ps['kredit']),
+						'',
+						"Rp.". number_format(abs(array_sum($data['debit_akun']) - array_sum($data['kredit_akun']))),
+					)
+				);
+			}
+
 		}
 		$left = $this->GetX()-3;
 		$this->SetX($left);
@@ -203,8 +219,12 @@ class RPDF extends FPDF
 		$this->Cell(76, $h, $nama['kodeAkun'] ." ". $nama['namaAkun'], 1, 0, 'R', true);
 		$this->Cell(30, $h, "Rp.". number_format($jumlah_total_debit), 1, 0, 'R', true);
 		$this->Cell(30, $h, "Rp.". number_format($jumlah_total_kredit), 1, 0, 'R', true);
-		$this->Cell(30, $h, "Rp.". number_format(array_sum($data['debit_akun']) - array_sum($data['kredit_akun'])), 1, 0, 'R', true);
+        if ((array_sum($data['debit_akun'])-array_sum($data['kredit_akun']))>0) {
+            $this->Cell(30, $h, "Rp.". number_format(array_sum($data['debit_akun']) - array_sum($data['kredit_akun'])), 1, 0, 'R', true);
+			$this->Cell(30, $h, " ", 1, 0, 'R', true);
+        } else {}
 		$this->Cell(30, $h, " ", 1, 0, 'R', true);
+		$this->Cell(30, $h, "Rp.". number_format(abs(array_sum($data['debit_akun']) - array_sum($data['kredit_akun']))), 1, 0, 'R', true);
 	}
 
 	// Page Footer
