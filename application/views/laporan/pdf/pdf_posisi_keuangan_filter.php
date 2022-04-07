@@ -181,11 +181,7 @@ class RPDF extends FPDF
 		$this->SetFillColor(255, 255, 255);
 		$this->Cell(50, 6, 'Total Liabilitas dan Ekuitas', 0, 0, 'L');
 		$this->Cell(70, 6, '', 0, 0, 'L');
-        if ($laba_rugi_bersih > 0) {
-            $this->Cell(70, 6, "Rp. " . number_format(abs($total_liabilitas_ekuitas + $laba_rugi_bersih)), 0, 1, 'R');
-        } else {
-			$this->Cell(70, 6, "Rp. " . number_format(abs($total_liabilitas_ekuitas - $laba_rugi_bersih)), 0, 1, 'R');
-		}
+            $this->Cell(70, 6, "Rp. " . number_format(abs($total_liabilitas_ekuitas - $laba_rugi_bersih)), 0, 1, 'R');
 		$this->Ln(6);
 		$this->SetLineWidth(0.6);
 		$this->Line(10, $this->GetY(), 200, $this->GetY());
