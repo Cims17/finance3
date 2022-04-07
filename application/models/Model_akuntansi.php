@@ -9,8 +9,7 @@ class Model_akuntansi extends CI_Model
 		$this->db->from('log_akun, akun');
 		$this->db->where('log_akun.idAkun = akun.idAkun');
 		$this->db->where('log_akun.input_from', 'Jurnal Umum');
-		$this->db->order_by('kodeAkun', 'ASC');
-		$this->db->order_by('debit', 'DESC');
+		$this->db->order_by('idLog', 'ASC');
 		return $this->db->get();
 	}
 
@@ -22,8 +21,7 @@ class Model_akuntansi extends CI_Model
 		$this->db->where('log_akun.input_from', 'Jurnal Umum');
 		$this->db->where('tanggal <=', $selesai);
 		$this->db->where('tanggal >=', $mulai);
-		$this->db->order_by('kodeAkun', 'ASC');
-		$this->db->order_by('debit', 'DESC');
+		$this->db->order_by('idLog', 'ASC');
 		return $this->db->get();
 	}
 
