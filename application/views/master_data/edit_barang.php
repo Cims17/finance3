@@ -63,10 +63,6 @@
 
                                 </div>
                             </div>
-							<div class="form-group">
-                                <label for="">Tanggal</label>
-                                <input type="date" class="form-control" name="tanggal" value="<?= $barang->tanggal ?>">
-                            </div>
                             <div class="form-group">
                                 <label for="">Keterangan</label>
                                 <input type="text" class="form-control" name="keterangan" value="<?= $barang->keterangan ?>">

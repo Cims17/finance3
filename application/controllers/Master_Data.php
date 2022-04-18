@@ -640,7 +640,6 @@ class Master_Data extends CI_Controller
 		$nama			= $this->input->post('namaBarang');
 		$kode			= $this->input->post('kodeBarang');
 		$jenisBarang	= $this->input->post('jenisBarang');
-		$tanggal		= $this->input->post('tanggal');
 		$stok			= $this->input->post('stok');
 		$harga			= $this->input->post('harga');
 		$harga2			= filter_var($harga, FILTER_SANITIZE_NUMBER_INT);
@@ -652,7 +651,6 @@ class Master_Data extends CI_Controller
 			'idJenis'		=> $jenisBarang,
 			'stok'		  	=> $stok,
 			'harga'       	=> $harga2,
-			'tanggal'		=> $tanggal,
 			'keterangan'  	=> $keterangan,
 
 		);
@@ -675,7 +673,6 @@ class Master_Data extends CI_Controller
 		$id 			= $this->input->post('idBarang');
 		$kode 			= $this->input->post('kodeBarang');
 		$jenis 			= $this->input->post('idJenis');
-		$tanggal		= $this->input->post('tanggal');
 		$stok  			= $this->input->post('stok');
 		$harga 			= $this->input->post('harga');
 		$keterangan 	= $this->input->post('keterangan');
@@ -684,7 +681,6 @@ class Master_Data extends CI_Controller
 			'kodeBarang'        => $kode,
 			'nama'      		=> $nama,
 			'idJenis'           => $jenis,
-			'tanggal'			=> $tanggal,
 			'stok'				=> $stok,
 			'harga'             => $harga,
 			'keterangan'        => $keterangan
