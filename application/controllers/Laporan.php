@@ -62,19 +62,19 @@ class Laporan extends CI_Controller
 
 			//HPP
 
-			$barang						= $this->Model_laporan->get_stok_barang()->row();
-			$penjualan		= $this->Model_laporan->get_stok_penjualan()->row();
-			$stokpenjualanfilter		= $this->Model_laporan->get_stok_penjualanfilter($mulai,$selesai)->row();
-			$pembelian		= $this->Model_laporan->get_pembelianfilter($mulai,$selesai)->row();
-			$stokpenjualansebelum		= $this->Model_laporan->get_stok_penjualansebelum($selesai)->row();
+			// $barang						= $this->Model_laporan->get_stok_barang()->row();
+			// $penjualan		= $this->Model_laporan->get_stok_penjualan()->row();
+			// $stokpenjualanfilter		= $this->Model_laporan->get_stok_penjualanfilter($mulai,$selesai)->row();
+			// $pembelian		= $this->Model_laporan->get_pembelianfilter($mulai,$selesai)->row();
+			// $stokpenjualansebelum		= $this->Model_laporan->get_stok_penjualansebelum($selesai)->row();
 
-			$total_awal  = ($barang->stok + $stokpenjualansebelum->kuantitas) * $barang->harga ;
-			$total_pembelian = $pembelian->totalPembelian;
-			$total_akhir = ($barang->stok + $penjualan->kuantitas - $stokpenjualansebelum->kuantitas )* $barang->harga;
+			// $total_awal  = ($barang->stok + $stokpenjualansebelum->kuantitas) * $barang->harga ;
+			// $total_pembelian = $pembelian->totalPembelian;
+			// $total_akhir = ($barang->stok + $penjualan->kuantitas - $stokpenjualansebelum->kuantitas )* $barang->harga;
 
-			$data['total_hpp'] = $total_awal +$total_pembelian-$total_akhir;
+			// $data['total_hpp'] = $total_awal +$total_pembelian-$total_akhir;
 
-			// $data['total_hpp'] =array_sum($data['debit_hpp']) - array_sum($data['kredit_hpp']);
+			$data['total_hpp'] =array_sum($data['debit_hpp']) - array_sum($data['kredit_hpp']);
 
 			$this->load->view('template/header');
 			$this->load->view('template/sidebar');
@@ -112,18 +112,18 @@ class Laporan extends CI_Controller
 			}
 
 			$data['total_beban'] =array_sum($data['debit_beban']) - array_sum($data['kredit_beban']);
-			// $data['total_hpp'] =array_sum($data['debit_hpp']) - array_sum($data['kredit_hpp']);
+			$data['total_hpp'] =array_sum($data['debit_hpp']) - array_sum($data['kredit_hpp']);
 
 			
-			$barang		= $this->Model_laporan->get_stok_barang()->row();
-			$penjualan		= $this->Model_laporan->get_stok_penjualan()->row();
-			$pembelian		= $this->Model_laporan->get_pembelian()->row();
+			// $barang		= $this->Model_laporan->get_stok_barang()->row();
+			// $penjualan		= $this->Model_laporan->get_stok_penjualan()->row();
+			// $pembelian		= $this->Model_laporan->get_pembelian()->row();
 
-			$total_awal  = ($barang->stok + $penjualan->kuantitas) * $barang->harga ;
-			$total_pembelian = $pembelian->totalPembelian;
-			$total_akhir = $barang->stok * $barang->harga;
+			// $total_awal  = ($barang->stok + $penjualan->kuantitas) * $barang->harga ;
+			// $total_pembelian = $pembelian->totalPembelian;
+			// $total_akhir = $barang->stok * $barang->harga;
 
-			$data['total_hpp'] = $total_awal +$total_pembelian-$total_akhir;
+			// $data['total_hpp'] = $total_awal +$total_pembelian-$total_akhir;
 
 			$this->load->view('template/header');
 			$this->load->view('template/sidebar');
