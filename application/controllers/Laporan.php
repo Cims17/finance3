@@ -68,13 +68,11 @@ class Laporan extends CI_Controller
 			$pembelian		= $this->Model_laporan->get_pembelianfilter($mulai,$selesai)->row();
 			$stokpenjualansebelum		= $this->Model_laporan->get_stok_penjualansebelum($selesai)->row();
 
-			$total_awal  = ($barang->stok + $stokpenjualanfilter->kuantitas) * $barang->harga ;
+			$total_awal  = ($barang->stok + $stokpenjualansebelum->kuantitas) * $barang->harga ;
 			$total_pembelian = $pembelian->totalPembelian;
 			$total_akhir = ($barang->stok + $penjualan->kuantitas - $stokpenjualansebelum->kuantitas )* $barang->harga;
 
 			$data['total_hpp'] = $total_awal +$total_pembelian-$total_akhir;
-
-
 
 			// $data['total_hpp'] =array_sum($data['debit_hpp']) - array_sum($data['kredit_hpp']);
 
