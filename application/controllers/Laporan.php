@@ -63,13 +63,14 @@ class Laporan extends CI_Controller
 			//HPP
 
 			$barang						= $this->Model_laporan->get_stok_barang()->row();
+			$penjualan		= $this->Model_laporan->get_stok_penjualan()->row();
 			$stokpenjualanfilter		= $this->Model_laporan->get_stok_penjualanfilter($mulai,$selesai)->row();
 			$pembelian		= $this->Model_laporan->get_pembelianfilter($mulai,$selesai)->row();
-			$stokpenjualansebelum		= $this->Model_laporan->get_stok_penjualansebelum($mulai)->row();
+			$stokpenjualansebelum		= $this->Model_laporan->get_stok_penjualansebelum($selesai)->row();
 
 			$total_awal  = ($barang->stok + $stokpenjualanfilter->kuantitas) * $barang->harga ;
 			$total_pembelian = $pembelian->totalPembelian;
-			$total_akhir = ($barang->stok )* $barang->harga;
+			$total_akhir = ($barang->stok + $penjualan->kuantitas - $stokpenjualansebelum->kuantitas )* $barang->harga;
 
 			$data['total_hpp'] = $total_awal +$total_pembelian-$total_akhir;
 

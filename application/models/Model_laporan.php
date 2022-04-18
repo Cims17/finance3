@@ -176,10 +176,10 @@ class Model_laporan extends CI_Model
         return $this->db->get();
     }
 
-	public function get_stok_penjualansebelum($mulai){
+	public function get_stok_penjualansebelum($selesai){
         $this->db->select_sum('kuantitas');
         $this->db->from('penjualan_detail');
-		$this->db->where('penjualan_detail.tanggal <', $mulai);
+		$this->db->where('penjualan_detail.tanggal <', $selesai);
 
         return $this->db->get();
     }
