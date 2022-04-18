@@ -16,7 +16,7 @@
                                     <div class="form-group">
                                         <label for="">Kode Barang</label>
                                         <input type="text" value="<?= $barang->idBarang ?>" hidden name="idBarang">
-                                        <input type="number" class="form-control" name="kodeBarang" value="<?= $barang->kodeBarang ?>">
+                                        <input type="text" class="form-control" name="kodeBarang" value="<?= $barang->kodeBarang ?>">
                                     </div>
                                 </div>
                                 <div class="col-7">
@@ -62,6 +62,10 @@
                                     </div>
 
                                 </div>
+                            </div>
+							<div class="form-group">
+                                <label for="">Tanggal</label>
+                                <input type="date" class="form-control" name="tanggal" value="<?= $barang->tanggal ?>">
                             </div>
                             <div class="form-group">
                                 <label for="">Keterangan</label>

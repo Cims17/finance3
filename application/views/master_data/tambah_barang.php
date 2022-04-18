@@ -89,6 +89,19 @@
                                 </div>
                             </div>
 
+							<div class="form-group">
+
+                                <label for="">Tanggal Input</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                        </div>
+                                    </div>
+                                    <input type="date" class="form-control" name="tanggal">
+                                </div>
+
+                            </div>
+
 
                             <div class="form-group">
 

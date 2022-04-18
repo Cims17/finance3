@@ -637,21 +637,23 @@ class Master_Data extends CI_Controller
 
 	public function save_barang()
 	{
-		$nama = $this->input->post('namaBarang');
-		$kode = $this->input->post('kodeBarang');
-		$jenisBarang = $this->input->post('jenisBarang');
-		$stok = $this->input->post('stok');
-		$harga = $this->input->post('harga');
-		$harga2 = filter_var($harga, FILTER_SANITIZE_NUMBER_INT);
-		$keterangan = $this->input->post('keterangan');
+		$nama			= $this->input->post('namaBarang');
+		$kode			= $this->input->post('kodeBarang');
+		$jenisBarang	= $this->input->post('jenisBarang');
+		$tanggal		= $this->input->post('tanggal');
+		$stok			= $this->input->post('stok');
+		$harga			= $this->input->post('harga');
+		$harga2			= filter_var($harga, FILTER_SANITIZE_NUMBER_INT);
+		$keterangan		= $this->input->post('keterangan');
 
 		$data = array(
-			'nama'        => $nama,
-			'kodeBarang'  => $kode,
-			'idJenis'     => $jenisBarang,
-			'stok'		  => $stok,
-			'harga'       => $harga2,
-			'keterangan'  => $keterangan,
+			'nama'			=> $nama,
+			'kodeBarang'	=> $kode,
+			'idJenis'		=> $jenisBarang,
+			'stok'		  	=> $stok,
+			'harga'       	=> $harga2,
+			'tanggal'		=> $tanggal,
+			'keterangan'  	=> $keterangan,
 
 		);
 		$save = $this->Model_akun->insert_barang($data);
@@ -669,18 +671,20 @@ class Master_Data extends CI_Controller
 
 	public function update_barang()
 	{
-		$nama = $this->input->post('nama');
-		$id = $this->input->post('idBarang');
-		$kode = $this->input->post('kodeBarang');
-		$jenis = $this->input->post('idJenis');
-		$stok  = $this->input->post('stok');
-		$harga = $this->input->post('harga');
-		$keterangan = $this->input->post('keterangan');
+		$nama 			= $this->input->post('nama');
+		$id 			= $this->input->post('idBarang');
+		$kode 			= $this->input->post('kodeBarang');
+		$jenis 			= $this->input->post('idJenis');
+		$tanggal		= $this->input->post('tanggal');
+		$stok  			= $this->input->post('stok');
+		$harga 			= $this->input->post('harga');
+		$keterangan 	= $this->input->post('keterangan');
 
 		$data = array(
 			'kodeBarang'        => $kode,
 			'nama'      		=> $nama,
 			'idJenis'           => $jenis,
+			'tanggal'			=> $tanggal,
 			'stok'				=> $stok,
 			'harga'             => $harga,
 			'keterangan'        => $keterangan

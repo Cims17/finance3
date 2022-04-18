@@ -56,23 +56,14 @@
 										</td>
 										<td class="border-bottom"></td>
 									</tr>
-									<?php foreach ($jenis as $jns) : ?>
-												<?php if ($jns['id_tipeAkun'] == 5) : ?>
-													<?php foreach ($akun as $ak) : ?>
-														<?php if ($jns['idJenis'] == $ak['idJenis']) : ?>
 															<tr>
 																<td class="border-bottom"></td>
-																<td class="text-left border-bottom"><?= $ak['namaAkun'] ?></td>
+																<td class="text-left border-bottom">Harga Pokok Penjualan</td>
 																<td class="text-right border-bottom" colspan="2">
-																	Rp. <?= number_format($ak['debit'] - $ak['kredit'], 0, '', '.') ?>
+																	Rp. <?= number_format($total_hpp, 0, '', '.') ?>
 																</td>
 																<td class="border-bottom"></td>
 															</tr>
-
-														<?php endif ?>
-													<?php endforeach ?>
-												<?php endif ?>
-											<?php endforeach ?>
 									<tr>
 										<th class="text-left border-bottom" colspan="4">Laba Kotor</th>
 										<th class="text-center border-bottom" colspan="1">Rp. <?= number_format($jml_pjl['totalPenjualan'] - $total_hpp, 0, '', '.') ?></th>

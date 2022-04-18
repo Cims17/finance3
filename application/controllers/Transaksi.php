@@ -116,6 +116,7 @@ class Transaksi extends CI_Controller
 						'idBarang'		=> $_POST['idBarang'][$key],
 						'namaBarang'	=> $_POST['namaBarang'][$key],
 						'kuantitas'    	=> $_POST['kuantitas'][$key],
+						'tanggal'		=> $tanggal,
 						'total'			=> $rpl2,
 					);
 			endforeach;

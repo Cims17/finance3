@@ -150,4 +150,56 @@ class Model_laporan extends CI_Model
     {
         return $this->db->insert($tabel, $data);
     }
+
+	public function get_stok_barang(){
+        $this->db->select_sum('barang.stok');
+		$this->db->select_sum('barang.harga');
+        $this->db->from('barang');
+        $this->db->join('jenis_barang', 'barang.idJenis=jenis_barang.idJenis');
+
+        return $this->db->get();
+    }
+
+	public function get_stok_penjualan(){
+        $this->db->select_sum('kuantitas');
+        $this->db->from('penjualan_detail');
+
+        return $this->db->get();
+    }
+
+	public function get_stok_penjualanfilter($mulai, $selesai){
+        $this->db->select_sum('kuantitas');
+        $this->db->from('penjualan_detail');
+		$this->db->where('penjualan_detail.tanggal <=', $selesai);
+		$this->db->where('penjualan_detail.tanggal >=', $mulai);
+
+        return $this->db->get();
+    }
+
+	public function get_stok_penjualansebelum($mulai){
+        $this->db->select_sum('kuantitas');
+        $this->db->from('penjualan_detail');
+		$this->db->where('penjualan_detail.tanggal <', $mulai);
+
+        return $this->db->get();
+    }
+
+	public function get_pembelian(){
+        $this->db->select_sum('totalPembelian');
+        $this->db->from('pembelian');
+
+        return $this->db->get();
+    }
+
+	public function get_pembelianfilter($mulai, $selesai){
+        $this->db->select_sum('totalPembelian');
+        $this->db->from('pembelian');
+		$this->db->where('pembelian.tanggal <=', $selesai);
+		$this->db->where('pembelian.tanggal >=', $mulai);
+
+        return $this->db->get();
+    }
+
+	
+
 }
