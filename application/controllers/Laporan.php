@@ -81,38 +81,38 @@ class Laporan extends CI_Controller
 			$this->load->view('laporan/laba_rugi', $data);
 			$this->load->view('template/footer');
 		} else {
-			$data['jumlah_penjualan']   = $this->Model_laporan->total_penjualan()->result_array();
-			$data['jumlah_pembelian']   = $this->Model_laporan->total_pembelian()->result_array();
-			$data['total_jenis']		= $this->Model_laporan->get_posisi_keuangan_totaljenis_all()->result_array();
-			$data['jenis']	= $this->Model_akun->get_jenis_akun()->result_array();
-			$data['akun']	= $this->Model_laporan->get_posisi_keuangan_all()->result_array();
-			$data['tgl'] = array(
-				'mulai'      => '0000-00-00',
-				'selesai'       => '0000-00-00'
-			);
+			// $data['jumlah_penjualan']   = $this->Model_laporan->total_penjualan()->result_array();
+			// $data['jumlah_pembelian']   = $this->Model_laporan->total_pembelian()->result_array();
+			// $data['total_jenis']		= $this->Model_laporan->get_posisi_keuangan_totaljenis_all()->result_array();
+			// $data['jenis']	= $this->Model_akun->get_jenis_akun()->result_array();
+			// $data['akun']	= $this->Model_laporan->get_posisi_keuangan_all()->result_array();
+			// $data['tgl'] = array(
+			// 	'mulai'      => '0000-00-00',
+			// 	'selesai'       => '0000-00-00'
+			// );
 
-			// total tipe akun aset
-			$data['debit_beban'] =array();
-			$data['kredit_beban'] =array();
-			$data['debit_hpp'] =array();
-			$data['kredit_hpp'] =array();
-			foreach ($data['total_jenis'] as $ttl_jns) {
-                if ($ttl_jns['id_tipeAkun'] == 2) {
-                    array_push($data['debit_beban'], $ttl_jns['debit']);
-					array_push($data['kredit_beban'], $ttl_jns['kredit']);
-                }
-			}
+			// // total tipe akun aset
+			// $data['debit_beban'] =array();
+			// $data['kredit_beban'] =array();
+			// $data['debit_hpp'] =array();
+			// $data['kredit_hpp'] =array();
+			// foreach ($data['total_jenis'] as $ttl_jns) {
+            //     if ($ttl_jns['id_tipeAkun'] == 2) {
+            //         array_push($data['debit_beban'], $ttl_jns['debit']);
+			// 		array_push($data['kredit_beban'], $ttl_jns['kredit']);
+            //     }
+			// }
 
-			//total tipe aku HPP
-			foreach ($data['total_jenis'] as $ttl_jns) {
-                if ($ttl_jns['id_tipeAkun'] == 5) {
-                    array_push($data['debit_hpp'], $ttl_jns['debit']);
-					array_push($data['kredit_hpp'], $ttl_jns['kredit']);
-                }
-			}
+			// //total tipe aku HPP
+			// foreach ($data['total_jenis'] as $ttl_jns) {
+            //     if ($ttl_jns['id_tipeAkun'] == 5) {
+            //         array_push($data['debit_hpp'], $ttl_jns['debit']);
+			// 		array_push($data['kredit_hpp'], $ttl_jns['kredit']);
+            //     }
+			// }
 
-			$data['total_beban'] =array_sum($data['debit_beban']) - array_sum($data['kredit_beban']);
-			$data['total_hpp'] =array_sum($data['debit_hpp']) - array_sum($data['kredit_hpp']);
+			// $data['total_beban'] =array_sum($data['debit_beban']) - array_sum($data['kredit_beban']);
+			// $data['total_hpp'] =array_sum($data['debit_hpp']) - array_sum($data['kredit_hpp']);
 
 			
 			// $barang		= $this->Model_laporan->get_stok_barang()->row();
@@ -124,10 +124,14 @@ class Laporan extends CI_Controller
 			// $total_akhir = $barang->stok * $barang->harga;
 
 			// $data['total_hpp'] = $total_awal +$total_pembelian-$total_akhir;
+			$data['tgl'] = array(
+				'mulai'      => '0000-00-00',
+				'selesai'       => '0000-00-00'
+			);
 
 			$this->load->view('template/header');
 			$this->load->view('template/sidebar');
-			$this->load->view('laporan/laba_rugi', $data);
+			$this->load->view('laporan/laba_rugi_clear', $data);
 			$this->load->view('template/footer');
 		}
 
